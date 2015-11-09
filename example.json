@@ -2,16 +2,27 @@
 	"_id": "c-05",
 	"_parentId": "b-05",
     "_type": "component",
-    "_component": "flipcards",
+    "_component": "flipcard-audio",
     "_classes": "",
     "_layout": "full",
     "title": "Flip Card",
     "displayTitle": "Flip Card",
-    "body": "This is optional body text. Click the image below to reveal the text.",
-    "instruction": "",
-    "_flipType": "allFlip",
+    "body": "This is optional body text.",
+    "instruction": "Click the image below to reveal the text.",
+    "_flipType": "singleFlip", //_flipType accepts 'singleFlip' and 'allFlip'
     "_flipTime": 400,
 	"_inRow": 4,
+    "_audio": {
+        "_isEnabled": true,
+        "_showControls": true,
+        "_autoplay": true,
+        "_channel": 0,
+        "_location": "top-right",
+        "_media": {
+            "mp3": "course/en/audio/***.mp3",
+            "ogg": "course/en/audio/***.ogg"
+        }
+    },
     "_items": [
         {
             "frontImage": {
@@ -19,7 +30,11 @@
                 "alt": "flipcard item 1 graphic alt text here."
             },
             "backTitle": "Heading 1",
-            "backBody": "This is display text 1."
+            "backBody": "This is display text 1.",
+            "_audio": {
+                "mp3": "course/en/audio/***.mp3",
+                "ogg": "course/en/audio/***.ogg"
+            }
         },
         {
             "frontImage": {
@@ -27,54 +42,18 @@
                 "alt": "flipcard item 1 graphic alt text here."
             },
             "backTitle": "Heading 2",
-            "backBody": "<ul><li>This is list item 1.</li><li>This is list item 2.</li></ul>"
+            "backBody": "<ul><li>This is list item 1.</li><li>This is list item 2.</li></ul>",
+            "_audio": {
+                "mp3": "course/en/audio/***.mp3",
+                "ogg": "course/en/audio/***.ogg"
+            }
         }
     ]
 },
 
-{
-	"_id": "c-05",
-	"_parentId": "b-05",
-    "_type": "component",
-    "_component": "flipcards",
-    "_classes": "",
-    "_layout": "full",
-    "title": "Flip Card",
-    "displayTitle": "Flip Card",
-    "body": "This is optional body text. Click the image below to reveal the text.",
-    "instruction": "",
-    "_flipType": "singleFlip",
-    "_flipTime": 400,
-	"_inRow": 4,
-    "_items": [
-        {
-            "frontImage": {
-                "src": "course/en/images/flip_1.png",
-                "alt": "flipcard item 1 graphic alt text here."
-            },
-            "backTitle": "Heading 1",
-            "backBody": "This is display text 1."
-        },
-        {
-            "frontImage": {
-                "src": "course/en/images/flip_2.png",
-                "alt": "flipcard item 1 graphic alt text here."
-            },
-            "backTitle": "Heading 2",
-            "backBody": "<ul><li>This is list item 1.</li><li>This is list item 2.</li></ul>"
-        }
-    ]
-}
-
-//_flipType accepts 'singleFlip' and 'allFlip'
-
-
-
-
 // Add in course.json
-
-	"_flipcards": {
-		"ariaRegion": "This component displays a row on images, which when selected flip to display text.",
-		"instruction": ""
-	},
+"_flipcardAudio": {
+	"ariaRegion": "This component displays a row on images, which when selected flip to display text.",
+	"instruction": ""
+},
 

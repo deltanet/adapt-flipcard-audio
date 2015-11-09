@@ -1,90 +1,13 @@
-#adapt-flipcards
+#adapt-flipcard-audio
 
 Flip Card Component/Plug-in for Adapt Framework v2.0.0.
 
 A flip card Component/Plug-in that generates cards with an image on the front face and text on the back face.
 
-##Usage
-
-For example JSON format, see [example.json](https://github.com/deltanet/adapt-flipCards/blob/master/example.json).
-
-Two variations are in-built in this template. All flip and single flip. I have provided examples for both below.
-
-All Flip Example: All flip cards can flip at any given point of time and all will remain open.
-
-	{
-		"_id":"c-05",
-		"_parentId":"b-05",
-		"_type":"component",
-		"_component":"flipcards",
-		"_classes":"",
-		"_layout":"full",
-		"title": "Flip Card",
-		"displayTitle": "Flip Card",
-		"body": "This is optional body text. Click the image below to reveal the text.",
-		"instruction": "",
-		"_flipType": "allFlip",
-		"_flipTime": 400,
-		"_inRow": 4,
-		"_items": [
-			{
-				"frontImage": {
-					"src": "course/en/images/flip_1.png",
-					"alt": "flipcard item 1 graphic alt text here."
-				},
-				"backTitle": "Heading 1",
-				"backBody": "This is display text 1."
-			},
-			{
-				"frontImage": {
-					"src": "course/en/images/flip_2.png",
-					"alt": "flipcard item 1 graphic alt text here."
-				},
-				"backTitle": "Heading 2",
-				"backBody": "<ul><li>This is list item 1.</li><li>This is list item 2.</li></ul>"
-			}
-		]
-	}
-
-Single Flip Example: Only one flip card can flip at any given point of time and only one will remain open. If you click/tap on other flipcard the other open flip card will automatically close.
-
-	{
-	 	"_id":"c-135",
-	 	"_parentId":"b-70",
-	 	"_type":"component",
-	 	"_component":"flipcards",
-	 	"_classes":"",
-	 	"_layout":"full",
-	 	"title": "Flip Card",
-	 	"displayTitle": "Flip Card",
-	 	"body": "This is optional body text. Click the image below to reveal the text.",
-	 	"instruction": "",
-	 	"_flipType": "singleFlip",
-	 	"_flipTime": 400,
-		"_inRow": 4,
-	 	"_items": [
-			{
-				"frontImage": {
-					"src": "course/en/images/flip_1.png",
-					"alt": "flipcard item 1 graphic alt text here."
-				},
-				"backTitle": "Heading 1",
-				"backBody": "This is display text 1."
-			},
-			{
-				"frontImage": {
-					"src": "course/en/images/flip_2.png",
-					"alt": "flipcard item 1 graphic alt text here."
-				},
-				"backTitle": "Heading 2",
-				"backBody": "<ul><li>This is list item 1.</li><li>This is list item 2.</li></ul>"
-			}
-		]
-	}
 
 ##Settings overview
 
-For example JSON format, see [example.json](https://github.com/deltanet/adapt-flipCards/blob/master/example.json)
+For example JSON format, see [example.json](https://github.com/deltanet/adapt-flipcard-audio/blob/master/example.json)
 
 The following explains further settings for the flipcard component:
 
@@ -148,6 +71,6 @@ No known limitations.
 ----------------------------
 **Version number:**  2.0   
 **Framework versions:** 2.0  
-**Author / maintainer:** Deltanet with [contributors](https://github.com/deltanet/adapt-flipCards/graphs/contributors)  
-**Accessibility support:** TBC   
+**Author / maintainer:** Deltanet with [contributors](https://github.com/deltanet/adapt-flipcard-audio/graphs/contributors)  
+**Accessibility support:** yes   
 **RTL support:** yes
