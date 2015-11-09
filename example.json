@@ -1,0 +1,80 @@
+{
+	"_id": "c-05",
+	"_parentId": "b-05",
+    "_type": "component",
+    "_component": "flipcards",
+    "_classes": "",
+    "_layout": "full",
+    "title": "Flip Card",
+    "displayTitle": "Flip Card",
+    "body": "This is optional body text. Click the image below to reveal the text.",
+    "instruction": "",
+    "_flipType": "allFlip",
+    "_flipTime": 400,
+	"_inRow": 4,
+    "_items": [
+        {
+            "frontImage": {
+                "src": "course/en/images/flip_1.png",
+                "alt": "flipcard item 1 graphic alt text here."
+            },
+            "backTitle": "Heading 1",
+            "backBody": "This is display text 1."
+        },
+        {
+            "frontImage": {
+                "src": "course/en/images/flip_2.png",
+                "alt": "flipcard item 1 graphic alt text here."
+            },
+            "backTitle": "Heading 2",
+            "backBody": "<ul><li>This is list item 1.</li><li>This is list item 2.</li></ul>"
+        }
+    ]
+},
+
+{
+	"_id": "c-05",
+	"_parentId": "b-05",
+    "_type": "component",
+    "_component": "flipcards",
+    "_classes": "",
+    "_layout": "full",
+    "title": "Flip Card",
+    "displayTitle": "Flip Card",
+    "body": "This is optional body text. Click the image below to reveal the text.",
+    "instruction": "",
+    "_flipType": "singleFlip",
+    "_flipTime": 400,
+	"_inRow": 4,
+    "_items": [
+        {
+            "frontImage": {
+                "src": "course/en/images/flip_1.png",
+                "alt": "flipcard item 1 graphic alt text here."
+            },
+            "backTitle": "Heading 1",
+            "backBody": "This is display text 1."
+        },
+        {
+            "frontImage": {
+                "src": "course/en/images/flip_2.png",
+                "alt": "flipcard item 1 graphic alt text here."
+            },
+            "backTitle": "Heading 2",
+            "backBody": "<ul><li>This is list item 1.</li><li>This is list item 2.</li></ul>"
+        }
+    ]
+}
+
+//_flipType accepts 'singleFlip' and 'allFlip'
+
+
+
+
+// Add in course.json
+
+	"_flipcards": {
+		"ariaRegion": "This component displays a row on images, which when selected flip to display text.",
+		"instruction": ""
+	},
+
