@@ -102,19 +102,33 @@ define([
             var flipcardElementIndex = this.$('.flipcard-audio-item').index($selectedElement);
             this.setVisited(flipcardElementIndex);
 
-            ///// Audio /////
-            if ($selectedElement.hasClass('flipcard-audio-flip') && this.model.get('_audio')) {
+            var $frontflipcard = $selectedElement.find('.flipcard-audio-item-front');
+            var $flipcardTitle = $selectedElement.find('.flipcard-audio-item-back-title');
+            var $flipcardBody = $selectedElement.find('.flipcard-audio-item-back-body');
+
+            if ($selectedElement.hasClass('flipcard-audio-flip')) {
                 var item = this.model.get('_items')[flipcardElementIndex];
-                if (Adapt.audio.audioClip[this.model.get('_audio')._channel].canPlayType('audio/ogg')) this.audioFile = item._audio.ogg;
-                if (Adapt.audio.audioClip[this.model.get('_audio')._channel].canPlayType('audio/mpeg')) this.audioFile = item._audio.mp3;
-                Adapt.trigger('audio:playAudio', this.audioFile, this.model.get('_id'), this.model.get('_audio')._channel);
+                ///// Audio /////
+                if(this.model.get('_audio')){
+                    if (Adapt.audio.audioClip[this.model.get('_audio')._channel].canPlayType('audio/ogg')) this.audioFile = item._audio.ogg;
+                    if (Adapt.audio.audioClip[this.model.get('_audio')._channel].canPlayType('audio/mpeg')) this.audioFile = item._audio.mp3;
+                    Adapt.trigger('audio:playAudio', this.audioFile, this.model.get('_id'), this.model.get('_audio')._channel);
+                }
+                ///// End of Audio /////
+                $flipcardTitle.a11y_text();
+                $flipcardBody.a11y_text();
+                $flipcardTitle.a11y_focus();
+            } else {
+                $frontflipcard.a11y_focus();
+                $flipcardTitle.a11y_on(false);
+                $flipcardBody.a11y_on(false);
             }
-            ///// End of Audio /////
         },
 
         // This function will be responsible to perform Single flip on flipcard where only one card can flip and stay in the flipped state.
         performSingleFlip: function($selectedElement) {
             var flipcardContainer = $selectedElement.closest('.flipcard-audio-widget');
+
             if (!Modernizr.csstransforms3d) {
                 var frontflipcard = $selectedElement.find('.flipcard-audio-item-front');
                 var backflipcard = $selectedElement.find('.flipcard-audio-item-back');
@@ -134,13 +148,38 @@ define([
                     frontflipcard.fadeOut(flipTime, function() {
                         backflipcard.fadeIn(flipTime);
                     });
+
+                    var $itemFront = $selectedElement.find('.flipcard-audio-item-front');
+                    var $itemTitle = $selectedElement.find('.flipcard-audio-item-back-title');
+                    var $itemBody = $selectedElement.find('.flipcard-audio-item-back-body');
+
+                    $itemFront.a11y_focus();
+                    $itemTitle.a11y_on(false);
+                    $itemBody.a11y_on(false);
                 }
             } else {
                 if ($selectedElement.hasClass('flipcard-audio-flip')) {
                     $selectedElement.removeClass('flipcard-audio-flip');
+
+                    var $itemFront = $selectedElement.find('.flipcard-audio-item-front');
+                    var $itemTitle = $selectedElement.find('.flipcard-audio-item-back-title');
+                    var $itemBody = $selectedElement.find('.flipcard-audio-item-back-body');
+
+                    $itemFront.a11y_focus();
+                    $itemTitle.a11y_on(false);
+                    $itemBody.a11y_on(false);
+
                 } else {
                     flipcardContainer.find('.flipcard-audio-item').removeClass('flipcard-audio-flip');
                     $selectedElement.addClass('flipcard-audio-flip');
+
+                    var $itemFront = $selectedElement.find('.flipcard-audio-item-front');
+                    var $itemTitle = $selectedElement.find('.flipcard-audio-item-back-title');
+                    var $itemBody = $selectedElement.find('.flipcard-audio-item-back-body');
+
+                    $itemTitle.a11y_text();
+                    $itemBody.a11y_text();
+                    $itemTitle.a11y_focus();
 
                     ///// Audio /////
                     var index = this.$('.flipcard-audio-item').index($selectedElement);
