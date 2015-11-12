@@ -66,7 +66,7 @@ define([
             if (event && event.preventDefault) event.preventDefault();
 
             ///// Audio /////
-            if (this.model.get('_audio')) {
+            if (this.model.has('_audio') && this.model.get('_audio')._isEnabled) {
                 Adapt.trigger('audio:pauseAudio', this.model.get('_audio')._channel);
             }
             ///// End of Audio /////
@@ -109,7 +109,7 @@ define([
             if ($selectedElement.hasClass('flipcard-audio-flip')) {
                 var item = this.model.get('_items')[flipcardElementIndex];
                 ///// Audio /////
-                if(this.model.get('_audio')){
+                if (this.model.has('_audio') && this.model.get('_audio')._isEnabled) {
                     if (Adapt.audio.audioClip[this.model.get('_audio')._channel].canPlayType('audio/ogg')) this.audioFile = item._audio.ogg;
                     if (Adapt.audio.audioClip[this.model.get('_audio')._channel].canPlayType('audio/mpeg')) this.audioFile = item._audio.mp3;
                     Adapt.trigger('audio:playAudio', this.audioFile, this.model.get('_id'), this.model.get('_audio')._channel);
@@ -184,7 +184,7 @@ define([
                     ///// Audio /////
                     var index = this.$('.flipcard-audio-item').index($selectedElement);
                     var item = this.model.get('_items')[index];
-                    if (this.model.get('_audio')) {
+                    if (this.model.has('_audio') && this.model.get('_audio')._isEnabled) {
                         if (Adapt.audio.audioClip[this.model.get('_audio')._channel].canPlayType('audio/ogg')) this.audioFile = item._audio.ogg;
                         if (Adapt.audio.audioClip[this.model.get('_audio')._channel].canPlayType('audio/mpeg')) this.audioFile = item._audio.mp3;
                         Adapt.trigger('audio:playAudio', this.audioFile, this.model.get('_id'), this.model.get('_audio')._channel);
