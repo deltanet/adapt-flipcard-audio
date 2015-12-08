@@ -1,6 +1,6 @@
 {
-	"_id": "c-05",
-	"_parentId": "b-05",
+    "_id": "c-05",
+    "_parentId": "b-05",
     "_type": "component",
     "_component": "flipcard-audio",
     "_classes": "",
@@ -11,7 +11,12 @@
     "instruction": "Click the image below to reveal the text.",
     "_flipType": "singleFlip", //_flipType accepts 'singleFlip' and 'allFlip'
     "_flipTime": 400,
-	"_inRow": 4,
+    "_inRow": 4,
+    "displayTitleReduced": "Reduced title",
+    "bodyReduced": "Reduced text",
+    "_reducedText": {
+        "_isEnabled": true
+    },
     "_audio": {
         "_isEnabled": true,
         "_showControls": true,
@@ -30,7 +35,9 @@
                 "alt": "flipcard item 1 graphic alt text here."
             },
             "backTitle": "Heading 1",
+            "backTitleReduced": "Reduced heading 1",
             "backBody": "This is display text 1.",
+            "backBodyReduced": "Reduced body text 2",
             "_audio": {
                 "mp3": "course/en/audio/***.mp3",
                 "ogg": "course/en/audio/***.ogg"
@@ -42,7 +49,9 @@
                 "alt": "flipcard item 1 graphic alt text here."
             },
             "backTitle": "Heading 2",
+            "backTitleReduced": "Reduced heading 2",
             "backBody": "<ul><li>This is list item 1.</li><li>This is list item 2.</li></ul>",
+            "backBodyReduced": "Reduced body text 2",
             "_audio": {
                 "mp3": "course/en/audio/***.mp3",
                 "ogg": "course/en/audio/***.ogg"
@@ -53,7 +62,7 @@
 
 // Add in course.json
 "_flipcardAudio": {
-	"ariaRegion": "This component displays a row on images, which when selected flip to display text.",
-	"instruction": ""
+    "ariaRegion": "This component displays a row on images, which when selected flip to display text.",
+    "instruction": ""
 },
 

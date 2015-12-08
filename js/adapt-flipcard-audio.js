@@ -12,6 +12,9 @@ define([
         preRender: function() {
             this.listenTo(Adapt, 'device:resize', this.reRender, this);
             this.checkIfResetOnRevisit();
+
+            // Listen for text change on audio extension
+            this.listenTo(Adapt, "audio:changeText", this.replaceText);
         },
 
         postRender: function() {
@@ -23,8 +26,12 @@ define([
                 this.setReadyStatus();
                 this.reRender();
             }, this));
-			
-			this.checkInRow();
+            
+            this.checkInRow();
+
+            if (this.model.get('_reducedText') && this.model.get('_reducedText')._isEnabled && Adapt.config.get('_reducedText')._isEnabled) {
+                this.replaceText(Adapt.audio.textSize);
+            }
         },
 
         checkIfResetOnRevisit: function() {
@@ -45,23 +52,23 @@ define([
             if (imageHeight) {
                 this.$('.flipcard-audio-item').height(imageHeight);
             }
-			
-			this.checkInRow();
+            
+            this.checkInRow();
         },
-		
-		checkInRow: function($selectedElement) {
-			if(Adapt.device.screenSize === "large") {
-				var inRow = this.model.get("_inRow");
-				var itemInRow = (100 / inRow) - 1.5;
-				
-				$(".flipcard-audio-item").css({
-					width: itemInRow + "%"
-				});
-			} else {
-				$(".flipcard-audio-item").css({ "width" : "100%" });
-			}
-		},
-		
+        
+        checkInRow: function($selectedElement) {
+            if(Adapt.device.screenSize === "large") {
+                var inRow = this.model.get("_inRow");
+                var itemInRow = (100 / inRow) - 1.5;
+                
+                $(".flipcard-audio-item").css({
+                    width: itemInRow + "%"
+                });
+            } else {
+                $(".flipcard-audio-item").css({ "width" : "100%" });
+            }
+        },
+        
         onClickFlipItem: function(event) {
             if (event && event.preventDefault) event.preventDefault();
 
@@ -215,7 +222,33 @@ define([
                     this.setCompletionStatus();
                 }
             }
+        },
+
+        // Reduced text
+        replaceText: function(value) {
+            // If enabled
+            if (this.model.get('_reducedText') && this.model.get('_reducedText')._isEnabled && Adapt.config.get('_reducedText')._isEnabled) {
+                // Change component title and body
+                if(value == 0) {
+                    this.$('.component-title-inner').html(this.model.get('displayTitle')).a11y_text();
+                    this.$('.component-body-inner').html(this.model.get('body')).a11y_text();
+                } else {
+                    this.$('.component-title-inner').html(this.model.get('displayTitleReduced')).a11y_text();
+                    this.$('.component-body-inner').html(this.model.get('bodyReduced')).a11y_text();
+                }
+                // Change each items title and body
+                for (var i = 0; i < this.model.get('_items').length; i++) {
+                    if(value == 0) {
+                        this.$('.flipcard-audio-item-back-title').eq(i).html(this.model.get('_items')[i].backTitle);
+                        this.$('.flipcard-audio-item-back-body').eq(i).html(this.model.get('_items')[i].backBody);
+                    } else {
+                        this.$('.flipcard-audio-item-back-title').eq(i).html(this.model.get('_items')[i].backTitleReduced);
+                        this.$('.flipcard-audio-item-back-body').eq(i).html(this.model.get('_items')[i].backBodyReduced);
+                    }
+                }
+            }
         }
+
     });
 
     Adapt.register('flipcard-audio', FlipcardAudio);
