@@ -11,9 +11,9 @@
     height: 320px;
     position: relative;
     float: left;
-	.dir-rtl & {
-		float: right;
-	}
+    .dir-rtl & {
+      float: right;
+    }
     -webkit-perspective: 600px;
     -moz-perspective: 600px;
     -ms-perspective: 600px;
@@ -100,6 +100,11 @@
     -ms-transform: @flipcard-audio-item-rotate-Y-0deg;
     -o-transform: @flipcard-audio-item-rotate-Y-0deg;
     transform: @flipcard-audio-item-rotate-Y-0deg;
+  }
+
+  .flipcard-audio-item-back-title {
+    font-weight: @font-weight-bold;
+    padding-bottom: @component-padding;
   }
 
   @media (max-width: 774px) {
