@@ -128,6 +128,7 @@ define([
                 $flipcardTitle.a11y_on(false);
                 $flipcardBody.a11y_on(false);
             }
+            $selectedElement.addClass("visited");
         },
 
         // This function will be responsible to perform Single flip on flipcard where only one card can flip and stay in the flipped state.
@@ -194,6 +195,7 @@ define([
                     }
                     ///// End of Audio /////
                 }
+                $selectedElement.addClass("visited");
             }
 
             var flipcardElementIndex = this.$('.flipcard-audio-item').index($selectedElement);
