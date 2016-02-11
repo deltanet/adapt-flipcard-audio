@@ -59,7 +59,7 @@ define([
         checkInRow: function($selectedElement) {
             if(Adapt.device.screenSize === "large") {
                 var inRow = this.model.get("_inRow");
-                var itemInRow = (100 / inRow) - 1.5;
+                var itemInRow = (100 / inRow) - 2;
                 
                 $(".flipcard-audio-item").css({
                     width: itemInRow + "%"
