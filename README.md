@@ -9,7 +9,8 @@ A flip card Component/Plug-in that generates cards with an image on the front fa
 **Framework versions:** 2.0  
 **Author / maintainer:** Deltanet with [contributors](https://github.com/deltanet/adapt-flipcard-audio/graphs/contributors)  
 **Accessibility support:** yes   
-**RTL support:** yes
+**RTL support:** yes   
+**Authoring tool support:** yes  
 ----------------------------
 
 ##Settings overview
