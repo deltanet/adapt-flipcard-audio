@@ -9,7 +9,8 @@
 	"displayName" : "flipcard-audio",
 	"component" : "flipcard-audio",
 	"assetFields" : [
-		"_items[].frontImageSrc"
+		"_items[].frontImageSrc",
+		"_items[]._audio.src"
 	],
 	"keywords": [
 		"adapt-plugin",
