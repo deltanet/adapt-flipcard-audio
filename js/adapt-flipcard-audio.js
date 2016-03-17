@@ -29,7 +29,7 @@ define([
             
             this.checkInRow();
 
-            if (this.model.get('_reducedText') && this.model.get('_reducedText')._isEnabled && Adapt.config.get('_reducedText')._isEnabled) {
+            if (Adapt.config.get('_audio') && Adapt.config.get('_audio')._isReducedTextEnabled && this.model.get('_reducedText') && this.model.get('_reducedText')._isEnabled) {
                 this.replaceText(Adapt.audio.textSize);
             }
         },
@@ -73,7 +73,7 @@ define([
             if (event && event.preventDefault) event.preventDefault();
 
             ///// Audio /////
-            if (this.model.has('_audio') && this.model.get('_audio')._isEnabled && Adapt.audio.audioClip[this.model.get('_audio')._channel].status==1) {
+            if (Adapt.config.get('_audio') && Adapt.config.get('_audio')._isEnabled && this.model.has('_audio') && this.model.get('_audio')._isEnabled && Adapt.audio.audioClip[this.model.get('_audio')._channel].status==1) {
                 Adapt.trigger('audio:pauseAudio', this.model.get('_audio')._channel);
             }
             ///// End of Audio /////
@@ -116,7 +116,7 @@ define([
             if ($selectedElement.hasClass('flipcard-audio-flip')) {
                 var item = this.model.get('_items')[flipcardElementIndex];
                 ///// Audio /////
-                if (this.model.has('_audio') && this.model.get('_audio')._isEnabled && Adapt.audio.audioClip[this.model.get('_audio')._channel].status==1) {
+                if (Adapt.config.get('_audio') && Adapt.config.get('_audio')._isEnabled && this.model.has('_audio') && this.model.get('_audio')._isEnabled && Adapt.audio.audioClip[this.model.get('_audio')._channel].status==1) {
                     Adapt.trigger('audio:playAudio', item._audio.src, this.model.get('_id'), this.model.get('_audio')._channel);
                 }
                 ///// End of Audio /////
@@ -190,7 +190,7 @@ define([
                     ///// Audio /////
                     var index = this.$('.flipcard-audio-item').index($selectedElement);
                     var item = this.model.get('_items')[index];
-                    if (this.model.has('_audio') && this.model.get('_audio')._isEnabled && Adapt.audio.audioClip[this.model.get('_audio')._channel].status==1) {
+                    if (Adapt.config.get('_audio') && Adapt.config.get('_audio')._isEnabled && this.model.has('_audio') && this.model.get('_audio')._isEnabled && Adapt.audio.audioClip[this.model.get('_audio')._channel].status==1) {
                         Adapt.trigger('audio:playAudio', item._audio.src, this.model.get('_id'), this.model.get('_audio')._channel);
                     }
                     ///// End of Audio /////
@@ -225,7 +225,7 @@ define([
         // Reduced text
         replaceText: function(value) {
             // If enabled
-            if (this.model.get('_reducedText') && this.model.get('_reducedText')._isEnabled && Adapt.config.get('_reducedText')._isEnabled) {
+            if (Adapt.config.get('_audio') && Adapt.config.get('_audio')._isReducedTextEnabled && this.model.get('_reducedText') && this.model.get('_reducedText')._isEnabled) {
                 // Change component title and body
                 if(value == 0) {
                     this.$('.component-title-inner').html(this.model.get('displayTitle')).a11y_text();
