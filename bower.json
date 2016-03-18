@@ -6,7 +6,7 @@
 	"issues": "https://github.com/deltanet/adapt-flipcard-audio/issues",
 	"description": "Flip Card Template Adapt Framework v2.0.x.",
 	"main": "/js/adapt-flipcard-audio.js",
-	"displayName" : "flipcard-audio",
+	"displayName" : "Flipcard - audio",
 	"component" : "flipcard-audio",
 	"assetFields" : [
 		"_items[].frontImageSrc",
