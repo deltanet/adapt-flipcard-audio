@@ -59,11 +59,11 @@ define([
                 var inRow = this.model.get("_inRow");
                 var itemInRow = (100 / inRow) - 2;
                 
-                $(".flipcard-audio-item").css({
+                this.$(".flipcard-audio-item").css({
                     width: itemInRow + "%"
                 });
             } else {
-                $(".flipcard-audio-item").css({ "width" : "100%" });
+                this.$(".flipcard-audio-item").css({ "width" : "100%" });
             }
         },
         
