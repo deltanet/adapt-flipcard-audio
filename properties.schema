@@ -47,6 +47,15 @@
       "validators": ["required", "number"],
       "help": "How much time should the flip animation takes"
     },
+    "_inRow": {
+      "type":"number",
+      "title": "Number in Row",
+      "required":true,
+      "default": 2,
+      "inputType": "Number",
+      "validators": ["required", "number"],
+      "help": "Number of items in a row"
+    },
     "_items": {
       "type": "array",
       "required": true,
@@ -131,15 +140,6 @@
           }
         }
       }
-    },
-    "_inRow": {
-      "type":"number",
-      "title": "Number in Row",
-      "required":true,
-      "default": 2,
-      "inputType": "Number",
-      "validators": ["required", "number"],
-      "help": "Number of items in a row"
     }
   }
 }

@@ -12,11 +12,6 @@
     "_flipType": "singleFlip", //_flipType accepts 'singleFlip' and 'allFlip'
     "_flipTime": 400,
     "_inRow": 4,
-    "displayTitleReduced": "Reduced title",
-    "bodyReduced": "Reduced text",
-    "_reducedText": {
-        "_isEnabled": true
-    },
     "_items": [
         {
             "frontImage": {
@@ -52,4 +47,3 @@
     "ariaRegion": "This component displays a row on images, which when selected flip to display text.",
     "instruction": ""
 },
-

@@ -28,7 +28,7 @@ define([
                 this.reRender();
             }, this));
 
-            if (Adapt.config.get('_audio') && Adapt.config.get('_audio')._isReducedTextEnabled && this.model.get('_reducedText') && this.model.get('_reducedText')._isEnabled) {
+            if (this.model.get('_audio') && this.model.get('_audio')._reducedTextisEnabled) {
                 this.replaceText(Adapt.audio.textSize);
             }
         },
@@ -53,12 +53,12 @@ define([
                 this.$('.flipcard-audio-item').height(imageHeight);
             }
         },
-        
+
         checkInRow: function($selectedElement) {
             if(Adapt.device.screenSize === "large") {
                 var inRow = this.model.get("_inRow");
                 var itemInRow = (100 / inRow) - 2;
-                
+
                 this.$(".flipcard-audio-item").css({
                     width: itemInRow + "%"
                 });
@@ -66,12 +66,12 @@ define([
                 this.$(".flipcard-audio-item").css({ "width" : "100%" });
             }
         },
-        
+
         onClickFlipItem: function(event) {
             if (event && event.preventDefault) event.preventDefault();
 
             ///// Audio /////
-            if (Adapt.config.get('_audio') && Adapt.config.get('_audio')._isEnabled && this.model.has('_audio') && this.model.get('_audio')._isEnabled && Adapt.audio.audioClip[this.model.get('_audio')._channel].status==1) {
+            if (this.model.has('_audio') && this.model.get('_audio')._isEnabled && Adapt.audio.audioClip[this.model.get('_audio')._channel].status==1) {
                 Adapt.trigger('audio:pauseAudio', this.model.get('_audio')._channel);
             }
             ///// End of Audio /////
@@ -114,7 +114,7 @@ define([
             if ($selectedElement.hasClass('flipcard-audio-flip')) {
                 var item = this.model.get('_items')[flipcardElementIndex];
                 ///// Audio /////
-                if (Adapt.config.get('_audio') && Adapt.config.get('_audio')._isEnabled && this.model.has('_audio') && this.model.get('_audio')._isEnabled && Adapt.audio.audioClip[this.model.get('_audio')._channel].status==1) {
+                if (this.model.has('_audio') && this.model.get('_audio')._isEnabled && Adapt.audio.audioClip[this.model.get('_audio')._channel].status==1) {
                     Adapt.trigger('audio:playAudio', item._audio.src, this.model.get('_id'), this.model.get('_audio')._channel);
                 }
                 ///// End of Audio /////
@@ -188,7 +188,7 @@ define([
                     ///// Audio /////
                     var index = this.$('.flipcard-audio-item').index($selectedElement);
                     var item = this.model.get('_items')[index];
-                    if (Adapt.config.get('_audio') && Adapt.config.get('_audio')._isEnabled && this.model.has('_audio') && this.model.get('_audio')._isEnabled && Adapt.audio.audioClip[this.model.get('_audio')._channel].status==1) {
+                    if (this.model.has('_audio') && this.model.get('_audio')._isEnabled && Adapt.audio.audioClip[this.model.get('_audio')._channel].status==1) {
                         Adapt.trigger('audio:playAudio', item._audio.src, this.model.get('_id'), this.model.get('_audio')._channel);
                     }
                     ///// End of Audio /////
