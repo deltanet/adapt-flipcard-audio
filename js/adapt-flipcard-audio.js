@@ -24,10 +24,9 @@ define([
 
             this.$('.flipcard-audio-widget').imageready(_.bind(function() {
                 this.setReadyStatus();
+                this.checkInRow();
                 this.reRender();
             }, this));
-            
-            this.checkInRow();
 
             if (Adapt.config.get('_audio') && Adapt.config.get('_audio')._isReducedTextEnabled && this.model.get('_reducedText') && this.model.get('_reducedText')._isEnabled) {
                 this.replaceText(Adapt.audio.textSize);
@@ -48,12 +47,11 @@ define([
         },
 
         reRender: function() {
+            this.checkInRow();
             var imageHeight = this.$('.flipcard-audio-item-frontImage').eq(0).height();
             if (imageHeight) {
                 this.$('.flipcard-audio-item').height(imageHeight);
             }
-            
-            this.checkInRow();
         },
         
         checkInRow: function($selectedElement) {
@@ -61,11 +59,11 @@ define([
                 var inRow = this.model.get("_inRow");
                 var itemInRow = (100 / inRow) - 2;
                 
-                $(".flipcard-audio-item").css({
+                this.$(".flipcard-audio-item").css({
                     width: itemInRow + "%"
                 });
             } else {
-                $(".flipcard-audio-item").css({ "width" : "100%" });
+                this.$(".flipcard-audio-item").css({ "width" : "100%" });
             }
         },
         

@@ -7,8 +7,6 @@
 .flipcard-audio-component {
 
   .flipcard-audio-item {
-    width: 48.5%;
-    height: 320px;
     position: relative;
     float: left;
     .dir-rtl & {
@@ -26,16 +24,16 @@
 
     &.visited {
       .flipcard-audio-item-front {
-        outline: 3px solid @item-color-visited;
+        border: 3px solid @item-color-visited;
       }
     }
 
   }
 
   .flipcard-audio-item-front {
-    outline: 3px solid @item-color;
+    border: 3px solid @item-color;
     &:hover {
-      outline: 3px solid @item-color-hover;
+      border: 3px solid @item-color-hover;
     }
   }
 
@@ -45,9 +43,8 @@
     top: 0;
     left: 0;
     z-index: 110;
-    width: 100%;
+    width: 99%;
     height: 100%;
-    border: none;
     background: @primary-color;
     cursor: pointer;
 
@@ -79,6 +76,10 @@
 
     &.flipcard-audio-item-back {
       padding: @item-padding;
+
+      border: 3px solid @primary-color;
+
+      width: 100%;
 
       box-sizing: border-box;
       -webkit-box-sizing: border-box;
@@ -122,14 +123,12 @@
     padding-bottom: @component-padding;
   }
 
-  @media (max-width: 774px) {
-
+  @media all and (max-width: @device-width-medium) {
     .flipcard-audio-item {
       width: 100%;
-      height: 200px;
-      margin-left: 0px;
-      margin-right: 0px;
+      margin-left: 0%;
+      margin-right: 0%;
     }
-
   }
+
 }
