@@ -28,7 +28,7 @@ define([
                 this.reRender();
             }, this));
 
-            if (this.model.get('_reducedText') && this.model.get('_reducedText')._isEnabled && Adapt.config.get('_reducedText')._isEnabled) {
+            if (this.model.get('_audio') && this.model.get('_audio')._reducedTextisEnabled) {
                 this.replaceText(Adapt.audio.textSize);
             }
         },
@@ -53,12 +53,12 @@ define([
                 this.$('.flipcard-audio-item').height(imageHeight);
             }
         },
-        
+
         checkInRow: function($selectedElement) {
             if(Adapt.device.screenSize === "large") {
                 var inRow = this.model.get("_inRow");
                 var itemInRow = (100 / inRow) - 2;
-                
+
                 this.$(".flipcard-audio-item").css({
                     width: itemInRow + "%"
                 });
@@ -66,7 +66,7 @@ define([
                 this.$(".flipcard-audio-item").css({ "width" : "100%" });
             }
         },
-        
+
         onClickFlipItem: function(event) {
             if (event && event.preventDefault) event.preventDefault();
 
@@ -223,7 +223,7 @@ define([
         // Reduced text
         replaceText: function(value) {
             // If enabled
-            if (this.model.get('_reducedText') && this.model.get('_reducedText')._isEnabled && Adapt.config.get('_reducedText')._isEnabled) {
+            if (Adapt.config.get('_audio') && Adapt.config.get('_audio')._isReducedTextEnabled && this.model.get('_reducedText') && this.model.get('_reducedText')._isEnabled) {
                 // Change component title and body
                 if(value == 0) {
                     this.$('.component-title-inner').html(this.model.get('displayTitle')).a11y_text();

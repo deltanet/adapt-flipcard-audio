@@ -47,6 +47,15 @@
       "validators": ["required", "number"],
       "help": "How much time should the flip animation takes"
     },
+    "_inRow": {
+      "type":"number",
+      "title": "Number in Row",
+      "required":true,
+      "default": 2,
+      "inputType": "Number",
+      "validators": ["required", "number"],
+      "help": "Number of items in a row"
+    },
     "_items": {
       "type": "array",
       "required": true,
@@ -87,6 +96,15 @@
             "validators": [],
             "help": "Enter a title text for back side of flipcard element"
           },
+          "backTitleReduced": {
+            "type": "string",
+            "required": false,
+            "inputType": "Text",
+            "title": "Item Title - Reduced Text",
+            "default": "",
+            "validators": [],
+            "help": "Enter a title text for back side of flipcard element"
+          },
           "backBody": {
             "type": "string",
             "required": false,
@@ -95,18 +113,33 @@
             "default": "",
             "validators": [],
             "help": "Enter body text for back side of flipcard element"
+          },
+          "backBodyReduced": {
+            "type": "string",
+            "required": false,
+            "inputType": "TextArea",
+            "title": "Item Body - Reduced Text",
+            "default": "",
+            "validators": [],
+            "help": "Enter body text for back side of flipcard element"
+          },
+          "_audio": {
+            "type": "object",
+            "required": false,
+            "properties": {
+              "src": {
+                "type": "string",
+                "required": false,
+                "default": "",
+                "title": "Audio",
+                "inputType": "Asset:audio",
+                "validators": [],
+                "help": "Optional audio this flipcard element"
+              }
+            }
           }
         }
       }
-    },
-    "_inRow": {
-      "type":"number",
-	  "title": "Number in Row",
-      "required":true,
-      "default": 2,
-      "inputType": "Number",
-      "validators": ["required", "number"],
-      "help": "Number of items in a row"
     }
   }
 }
