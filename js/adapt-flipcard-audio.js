@@ -62,8 +62,53 @@ define([
                 this.$(".flipcard-audio-item").css({
                     width: itemInRow + "%"
                 });
+                this.setItemlayout();
             } else {
                 this.$(".flipcard-audio-item").css({ "width" : "100%" });
+                this.$(".flipcard-audio-item").css({ "margin-left" : "0px" });
+                this.$(".flipcard-audio-item").css({ "margin-right" : "0px" });
+            }
+        },
+
+        setItemlayout: function() {
+            var columns = this.model.get("_inRow");
+            var itemLength = this.model.get("_items").length;
+            var $items = this.$(".flipcard-audio-item");
+            var itemRemainder = itemLength % columns;
+            if (itemRemainder !== 0) {
+                if (itemRemainder === 1) {
+                    var index = itemLength - 1;
+                    var $item = $items.eq(index);
+                    this.centerItem($item);
+                } else {
+                    var itemToAlignIndex = itemLength - itemRemainder;
+                    var $item = $items.eq(itemToAlignIndex);
+                    this.alignItem($item, itemRemainder);
+                }
+            }
+        },
+
+        centerItem: function(item) {
+            item.css({
+                float: "none",
+                margin: "auto"
+            });
+        },
+
+        alignItem: function(item, itemsToAlign) {
+            var columns = this.model.get("_inRow");
+            var itemWidth = 100 / columns;
+
+            if (Adapt.config.get('_defaultDirection') == 'rtl') {
+                var marginRight = itemWidth / 2;
+                item.css({
+                    marginRight: marginRight + "%"
+                });
+            } else {
+                var marginLeft = itemWidth / 2;
+                item.css({
+                    marginLeft: marginLeft + "%"
+                });
             }
         },
 
