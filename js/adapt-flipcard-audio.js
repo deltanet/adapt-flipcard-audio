@@ -62,8 +62,53 @@ define([
                 this.$(".flipcard-audio-item").css({
                     width: itemInRow + "%"
                 });
+                this.setItemlayout();
             } else {
                 this.$(".flipcard-audio-item").css({ "width" : "100%" });
+                this.$(".flipcard-audio-item").css({ "margin-left" : "0px" });
+                this.$(".flipcard-audio-item").css({ "margin-right" : "0px" });
+            }
+        },
+
+        setItemlayout: function() {
+            var columns = this.model.get("_inRow");
+            var itemLength = this.model.get("_items").length;
+            var $items = this.$(".flipcard-audio-item");
+            var itemRemainder = itemLength % columns;
+            if (itemRemainder !== 0) {
+                if (itemRemainder === 1) {
+                    var index = itemLength - 1;
+                    var $item = $items.eq(index);
+                    this.centerItem($item);
+                } else {
+                    var itemToAlignIndex = itemLength - itemRemainder;
+                    var $item = $items.eq(itemToAlignIndex);
+                    this.alignItem($item, itemRemainder);
+                }
+            }
+        },
+
+        centerItem: function(item) {
+            item.css({
+                float: "none",
+                margin: "auto"
+            });
+        },
+
+        alignItem: function(item, itemsToAlign) {
+            var columns = this.model.get("_inRow");
+            var itemWidth = 100 / columns;
+
+            if (Adapt.config.get('_defaultDirection') == 'rtl') {
+                var marginRight = itemWidth / 2;
+                item.css({
+                    marginRight: marginRight + "%"
+                });
+            } else {
+                var marginLeft = itemWidth / 2;
+                item.css({
+                    marginLeft: marginLeft + "%"
+                });
             }
         },
 
@@ -223,15 +268,7 @@ define([
         // Reduced text
         replaceText: function(value) {
             // If enabled
-            if (Adapt.config.get('_audio') && Adapt.config.get('_audio')._isReducedTextEnabled && this.model.get('_reducedText') && this.model.get('_reducedText')._isEnabled) {
-                // Change component title and body
-                if(value == 0) {
-                    this.$('.component-title-inner').html(this.model.get('displayTitle')).a11y_text();
-                    this.$('.component-body-inner').html(this.model.get('body')).a11y_text();
-                } else {
-                    this.$('.component-title-inner').html(this.model.get('displayTitleReduced')).a11y_text();
-                    this.$('.component-body-inner').html(this.model.get('bodyReduced')).a11y_text();
-                }
+            if (Adapt.course.get('_audio') && Adapt.course.get('_audio')._reducedTextisEnabled && this.model.get('_audio') && this.model.get('_audio')._reducedTextisEnabled) {
                 // Change each items title and body
                 for (var i = 0; i < this.model.get('_items').length; i++) {
                     if(value == 0) {
