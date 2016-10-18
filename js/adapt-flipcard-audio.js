@@ -63,6 +63,8 @@ define([
                     width: itemInRow + "%"
                 });
                 this.setItemlayout();
+                this.$(".flipcard-audio-item").css({ "margin-left" : "1%" });
+                this.$(".flipcard-audio-item").css({ "margin-right" : "1%" });
             } else {
                 this.$(".flipcard-audio-item").css({ "width" : "100%" });
                 this.$(".flipcard-audio-item").css({ "margin-left" : "0px" });
