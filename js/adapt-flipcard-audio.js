@@ -162,7 +162,10 @@ define([
                 var item = this.model.get('_items')[flipcardElementIndex];
                 ///// Audio /////
                 if (this.model.has('_audio') && this.model.get('_audio')._isEnabled && Adapt.audio.audioClip[this.model.get('_audio')._channel].status==1) {
-                    Adapt.trigger('audio:playAudio', item._audio.src, this.model.get('_id'), this.model.get('_audio')._channel);
+                  // Reset onscreen id
+                  Adapt.audio.audioClip[this.model.get('_audio')._channel].onscreenID = "";
+                  // Trigger audio
+                  Adapt.trigger('audio:playAudio', item._audio.src, this.model.get('_id'), this.model.get('_audio')._channel);
                 }
                 ///// End of Audio /////
                 $flipcardTitle.a11y_text();
@@ -236,7 +239,10 @@ define([
                     var index = this.$('.flipcard-audio-item').index($selectedElement);
                     var item = this.model.get('_items')[index];
                     if (this.model.has('_audio') && this.model.get('_audio')._isEnabled && Adapt.audio.audioClip[this.model.get('_audio')._channel].status==1) {
-                        Adapt.trigger('audio:playAudio', item._audio.src, this.model.get('_id'), this.model.get('_audio')._channel);
+                      // Reset onscreen id
+                      Adapt.audio.audioClip[this.model.get('_audio')._channel].onscreenID = "";
+                      // Trigger audio
+                      Adapt.trigger('audio:playAudio', item._audio.src, this.model.get('_id'), this.model.get('_audio')._channel);
                     }
                     ///// End of Audio /////
                 }
