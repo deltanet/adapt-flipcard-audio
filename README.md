@@ -5,7 +5,7 @@ Flip Card Component/Plug-in for Adapt Framework v2.0.0.
 A flip card Component/Plug-in that generates cards with an image on the front face and text on the back face.
 
 ----------------------------
-**Version number:**  2.0.9
+**Version number:**  2.0.10
 **Framework versions:** 2.0  
 **Author / maintainer:** Deltanet with [contributors](https://github.com/deltanet/adapt-flipcard-audio/graphs/contributors)  
 **Accessibility support:** yes   
