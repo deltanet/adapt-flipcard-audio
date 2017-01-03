@@ -6,12 +6,14 @@
 
 .flipcard-audio-component {
 
+  .flipcard-audio-widget {
+		position: relative;
+		text-align: center;
+	}
+
   .flipcard-audio-item {
     position: relative;
-    float: left;
-    .dir-rtl & {
-      float: right;
-    }
+    display: inline-block;
     -webkit-perspective: 600px;
     -moz-perspective: 600px;
     -ms-perspective: 600px;
@@ -47,6 +49,11 @@
     height: 100%;
     background: @primary-color;
     cursor: pointer;
+
+    text-align: left;
+    .dir-rtl & {
+      text-align: right;
+    }
 
     -webkit-transform-style: preserve-3d;
       -moz-transform-style: preserve-3d;
