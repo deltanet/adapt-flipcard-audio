@@ -1,77 +1,61 @@
-#adapt-flipcard-audio
+# adapt-flipcard-audio
 
-Flip Card Component/Plug-in for Adapt Framework v2.0.0.
+**Flip card** is a *presentation component* for the [Adapt framework](https://github.com/adaptlearning/adapt_framework).  
 
-A flip card Component/Plug-in that generates cards with an image on the front face and text on the back face.
+The component generates cards with an image on the front face and text on the back face.  
+
+## Installation
+
+**Flip card** must be manually installed in the adapt framework and authoring tool.
+
+If **Flip card** has been uninstalled from the Adapt authoring tool, it may be reinstalled using the [Plug-in Manager](https://github.com/adaptlearning/adapt_authoring/wiki/Plugin-Manager).  
+
+## Settings Overview
+
+The attributes listed below are used in *components.json* to configure **Flip card**, and are properly formatted as JSON in [*example.json*](https://github.com/deltanet/adapt-flipcard-audio/blob/master/example.json).
+
+### Attributes
+
+[**core model attributes**](https://github.com/adaptlearning/adapt_framework/wiki/Core-model-attributes): These are inherited by every Adapt component. [Read more](https://github.com/adaptlearning/adapt_framework/wiki/Core-model-attributes).
+
+**_component** (string): This value must be: `flipcard-audio`.
+
+**_classes** (string): CSS class name to be applied to **Flip card**’s containing div. The class must be predefined in one of the Less files. Separate multiple classes with a space. A predefined CSS class can be applied to an Accordion Item.
+
+**_layout** (string): This defines the horizontal position of the component in the block. Acceptable values are `full`, `left` or `right`.  
+
+**instruction** (string): This optional text appears above the component. It is frequently used to guide the learner’s interaction with the component.  
+
+**_flipType** (string): This specifies whether all items animate or just the item selected. Acceptable values are `singleFlip` or `allFlip`.  
+
+**_flipTime** (number): This specifies the animation duration of the item.  
+
+**_inRow** (number): This specifies the number of items displayed in a row.  
+
+**_items** (array): Multiple items may be created. Each _item contains values for **frontImage**, **backTitle**, **backTitleReduced**, **backBody**, **backBodyReduced**, and **_audio**.  
+
+>**frontImage** (string): File name (including path) of the image. Path should be relative to the *src* folder.  
+
+>**backTitle** (string): This text is displayed as the item's title.  
+
+>**backTitleReduced** (string): This text is displayed as the item's reduced title text if audio and reduced text are enabled.  
+
+>**backBody** (string): This text is displayed as the item's body text.  
+
+>**backBodyReduced** (string): This text is displayed as the item's reduced body text if audio and reduced text are enabled.  
+
+>**_audio** (object): Items can have audio if it is enabled. It contains values for **src**.  
+
+>>**src** (string): File name (including path) of the audio clip.  
+
+## Limitations
+
+No known limitations.  
 
 ----------------------------
-**Version number:**  2.0.12
+**Version number:**  2.0.12  
 **Framework versions:** 2.0  
 **Author / maintainer:** Deltanet with [contributors](https://github.com/deltanet/adapt-flipcard-audio/graphs/contributors)  
 **Accessibility support:** yes   
 **RTL support:** yes   
 **Authoring tool support:** yes  
-----------------------------
-
-##Settings overview
-
-For example JSON format, see [example.json](https://github.com/deltanet/adapt-flipcard-audio/blob/master/example.json)
-
-The following explains further settings for the flipcard component:
-
-####_component
-
-This value must be: `flipcard`
-
-####_classes
-
-You can use this setting to add custom classes to your template and LESS file.
-
-####_layout
-
-This defines the position of the component in the block. Values can be `full`, `left` or `right`.
-
-####_flipType
-
-This value must be: `string` and would only accepts one of 'singleFlip' and 'allFlip' value.
-
-####_flipTime
-
-This value must be: `numeric` and should be use to sepecify time to flip.
-
-####_inRow
-
-The number of items in a row.
-
-####_items
-
-Each item represents one element of the flipcard. Text values can be entered for `frontImage`, and `backTitle` for each element.
-
-####frontImage
-
-Enter a path to the image for front side of flipcard.
-
-####backTitle
-
-Enter a title text for back side of flipcard element. This text is optional.
-
-####backBody
-
-The text entered for the body will be shown when the back side of flipcard appears. This text is optional.
-
-##Limitations
-
-This component works in IE9- but has slight change in behaviour, instead of flip effect it gets a fade-in/out effect.
-
-##Browser spec
-
-This component has been tested to the standard Adapt browser specification.
-
-##Important
-
-Please feel free to add issues and updates needed in the component.
-
-
-## Limitations
-
-No known limitations.
