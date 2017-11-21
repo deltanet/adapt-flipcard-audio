@@ -266,7 +266,7 @@ define([
         },
 
         checkCompletionStatus: function() {
-            if (!this.model.get('_isComplete')) {
+            if (!this.model.get('_isComplete') || !this.model.get('_isInteractionComplete')) {
                 if (this.getVisitedItems().length === this.model.get('_items').length) {
                     this.setCompletionStatus();
                 }
