@@ -18,8 +18,13 @@ define([
         },
 
         postRender: function() {
+          Modernizr.csstransforms3d = false;
             if (!Modernizr.csstransforms3d) {
-                this.$('.flipcard-audio-item-back').hide();
+              this.$('.flipcard-audio-item-back').hide();
+            } else {
+              this.$('.flipcard-audio-item-front').addClass('animated');
+              this.$('.flipcard-audio-item-back').addClass('animated');
+              this.$('.flipcard-audio-item-face').addClass('animated');
             }
 
             this.$('.flipcard-audio-widget').imageready(_.bind(function() {
@@ -148,7 +153,7 @@ define([
                     });
                 }
             } else {
-                $selectedElement.toggleClass('flipcard-audio-flip');
+              $selectedElement.toggleClass('flipcard-audio-flip');
             }
 
             var flipcardElementIndex = this.$('.flipcard-audio-item').index($selectedElement);
@@ -182,7 +187,6 @@ define([
         // This function will be responsible to perform Single flip on flipcard where only one card can flip and stay in the flipped state.
         performSingleFlip: function($selectedElement) {
             var flipcardContainer = $selectedElement.closest('.flipcard-audio-widget');
-
             if (!Modernizr.csstransforms3d) {
                 var frontflipcard = $selectedElement.find('.flipcard-audio-item-front');
                 var backflipcard = $selectedElement.find('.flipcard-audio-item-back');

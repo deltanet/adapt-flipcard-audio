@@ -4,6 +4,14 @@
 @flipcard-audio-item-rotate-Y-plus180deg: rotateY(180deg);
 @flipcard-audio-item-rotate-Y-0deg: rotateY(0deg);
 
+.vendor-prefix (@property, @value) {
+  -webkit-@{property}: @value;
+  -moz-@{property}: @value;
+  -ms-@{property}: @value;
+  -o-@{property}: @value;
+  @{property}: @value;
+}
+
 .flipcard-audio-component {
 
   .flipcard-audio-widget {
@@ -14,11 +22,9 @@
   .flipcard-audio-item {
     position: relative;
     display: inline-block;
-    -webkit-perspective: 600px;
-    -moz-perspective: 600px;
-    -ms-perspective: 600px;
-    -o-perspective: 600px;
-    perspective: 600px;
+
+    .vendor-prefix (perspective, 600px);
+
     margin-left: 1%;
     margin-right: 1%;
     margin-top: @component-padding;
@@ -40,6 +46,21 @@
     img {
       vertical-align: top;
     }
+    &.animated {
+      .vendor-prefix (transform, @flipcard-audio-item-rotate-Y-0deg);
+    }
+  }
+
+  .flipcard-audio-item-back {
+    padding: @item-padding;
+    border: 3px solid @primary-color;
+    width: 100%;
+
+    .vendor-prefix (box-sizing, border-box);
+
+    &.animated {
+      .vendor-prefix (transform, @flipcard-audio-item-rotate-Y-minus180deg);
+    }
   }
 
   .flipcard-audio-item-face {
@@ -59,51 +80,11 @@
       text-align: right;
     }
 
-    -webkit-transform-style: preserve-3d;
-      -moz-transform-style: preserve-3d;
-      -ms-transform-style: preserve-3d;
-      -o-transform-style: preserve-3d;
-      transform-style: preserve-3d;
-
-      -webkit-backface-visibility: hidden;
-      -moz-backface-visibility: hidden;
-      -ms-backface-visibility: hidden;
-      -o-backface-visibility: hidden;
-      backface-visibility: hidden;
-
-      -webkit-transition: @flipcard-audio-item-transition;
-      -moz-transition: @flipcard-audio-item-transition;
-      -ms-transition: @flipcard-audio-item-transition;
-      -o-transition: @flipcard-audio-item-transition;
-      transition: @flipcard-audio-item-transition;
-
-    &.flipcard-audio-item-front {
-      -webkit-transform: @flipcard-audio-item-rotate-Y-0deg;
-      -moz-transform: @flipcard-audio-item-rotate-Y-0deg;
-      -ms-transform: @flipcard-audio-item-rotate-Y-0deg;
-      -o-transform: @flipcard-audio-item-rotate-Y-0deg;
-      transform: @flipcard-audio-item-rotate-Y-0deg;
+    &.animated {
+      .vendor-prefix (transition, @flipcard-audio-item-transition);
+      .vendor-prefix (transform-style, preserve-3d);
     }
-
-    &.flipcard-audio-item-back {
-      padding: @item-padding;
-
-      border: 3px solid @primary-color;
-
-      width: 100%;
-
-      box-sizing: border-box;
-      -webkit-box-sizing: border-box;
-      -moz-box-sizing: border-box;
-      -ms-box-sizing: border-box;
-      -o-box-sizing: border-box;
-
-      -webkit-transform: @flipcard-audio-item-rotate-Y-minus180deg;
-      -moz-transform: @flipcard-audio-item-rotate-Y-minus180deg;
-      -ms-transform: @flipcard-audio-item-rotate-Y-minus180deg;
-      -o-transform: @flipcard-audio-item-rotate-Y-minus180deg;
-      transform: @flipcard-audio-item-rotate-Y-minus180deg;
-    }
+    .vendor-prefix (backface-visibility, hidden);
   }
 
   .flipcard-audio-item .flipcard-audio-item-frontImage {
@@ -111,22 +92,14 @@
     height: auto;
   }
 
-  .flipcard-audio-item-tap.flipcard-audio-flip .flipcard-audio-item-front {
-    -webkit-transform: @flipcard-audio-item-rotate-Y-plus180deg;
-    -moz-transform: @flipcard-audio-item-rotate-Y-plus180deg;
-    -ms-transform: @flipcard-audio-item-rotate-Y-plus180deg;
-    -o-transform: @flipcard-audio-item-rotate-Y-plus180deg;
-    transform: @flipcard-audio-item-rotate-Y-plus180deg;
+  .flipcard-audio-flip .flipcard-audio-item-front {
+    .vendor-prefix (transform, @flipcard-audio-item-rotate-Y-plus180deg);
   }
 
-  .flipcard-audio-item-tap.flipcard-audio-flip .flipcard-audio-item-back {
+  .flipcard-audio-flip .flipcard-audio-item-back {
     overflow-x: hidden;
     overflow-y: auto;
-    -webkit-transform: @flipcard-audio-item-rotate-Y-0deg;
-    -moz-transform: @flipcard-audio-item-rotate-Y-0deg;
-    -ms-transform: @flipcard-audio-item-rotate-Y-0deg;
-    -o-transform: @flipcard-audio-item-rotate-Y-0deg;
-    transform: @flipcard-audio-item-rotate-Y-0deg;
+    .vendor-prefix (transform, @flipcard-audio-item-rotate-Y-0deg);
   }
 
   .flipcard-audio-item-back-title {
