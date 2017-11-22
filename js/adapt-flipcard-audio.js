@@ -18,7 +18,6 @@ define([
         },
 
         postRender: function() {
-          Modernizr.csstransforms3d = false;
             if (!Modernizr.csstransforms3d) {
               this.$('.flipcard-audio-item-back').hide();
             } else {
