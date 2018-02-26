@@ -15,6 +15,17 @@ define([
 
             // Listen for text change on audio extension
             this.listenTo(Adapt, "audio:changeText", this.replaceText);
+
+            Modernizr.csstransforms3d = false;
+
+            this.itemFlipped = new Array();
+
+            var itemLength = this.model.get("_items").length;
+
+            for (var i = 0; i < itemLength; i++) {
+              this.itemFlipped[i] = false;
+            }
+
         },
 
         postRender: function() {
@@ -28,7 +39,6 @@ define([
 
             this.$('.flipcard-audio-widget').imageready(_.bind(function() {
                 this.setReadyStatus();
-                this.checkInRow();
                 this.reRender();
             }, this));
 
@@ -52,10 +62,7 @@ define([
 
         reRender: function() {
             this.checkInRow();
-            var imageHeight = this.$('.flipcard-audio-item-frontImage').eq(0).height();
-            if (imageHeight) {
-                this.$('.flipcard-audio-item').height(imageHeight);
-            }
+            this.resizeHeights();
         },
 
         checkInRow: function($selectedElement) {
@@ -118,6 +125,41 @@ define([
             }
         },
 
+        resizeHeights: function() {
+          var $items = this.$(".flipcard-audio-item");
+          var itemLength = this.model.get("_items").length;
+
+          for (var i = 0; i < itemLength; i++) {
+
+            var height = null;
+
+            var $item = $items.eq(i);
+            var height = $item.find('.flipcard-audio-item-frontImage').height();
+
+            var $frontflipcard = $item.find('.flipcard-audio-item-frontImage');
+            var $backflipcard = $item.find('.flipcard-audio-item-back');
+
+            // reset
+            $item.css('height','auto');
+
+            // Check if item is flipped
+            if(this.itemFlipped[i] == true) {
+              // Check if text is bigger than image
+              if($backflipcard.outerHeight() > height) {
+                height = $backflipcard.outerHeight();
+              } else {
+                height = $frontflipcard.height();
+              }
+            } else {
+              height = $frontflipcard.height();
+            }
+
+            $item.height(height);
+
+          }
+
+        },
+
         onClickFlipItem: function(event) {
             if (event && event.preventDefault) event.preventDefault();
 
@@ -128,132 +170,102 @@ define([
             ///// End of Audio /////
 
             var $selectedElement = $(event.currentTarget);
+
             var flipType = this.model.get('_flipType');
             if (flipType === 'allFlip') {
                 this.performAllFlip($selectedElement);
             } else if (flipType === 'singleFlip') {
                 this.performSingleFlip($selectedElement);
             }
+            this.resizeHeights();
         },
 
         // This function will be responsible to perform All flip on flipcard where all cards can flip and stay in the flipped state.
         performAllFlip: function($selectedElement) {
-            if (!Modernizr.csstransforms3d) {
-                var $frontflipcard = $selectedElement.find('.flipcard-audio-item-front');
-                var $backflipcard = $selectedElement.find('.flipcard-audio-item-back');
-                var flipTime = this.model.get('_flipTime') || 'fast';
-                if ($frontflipcard.is(':visible')) {
-                    $frontflipcard.fadeOut(flipTime, function() {
-                        $backflipcard.fadeIn(flipTime);
-                    });
-                } else if ($backflipcard.is(':visible')) {
-                    $backflipcard.fadeOut(flipTime, function() {
-                        $frontflipcard.fadeIn(flipTime);
-                    });
-                }
-            } else {
-              $selectedElement.toggleClass('flipcard-audio-flip');
+
+          var flipcardElementIndex = this.$('.flipcard-audio-item').index($selectedElement);
+
+          // Flip item that is clicked on
+          this.flipItem(flipcardElementIndex, true);
+
+          // Flip all other items
+          var itemLength = this.model.get("_items").length;
+
+          for (var i = 0; i < itemLength; i++) {
+            if(i != flipcardElementIndex) {
+              this.flipItem(i, false);
             }
+          }
 
-            var flipcardElementIndex = this.$('.flipcard-audio-item').index($selectedElement);
-            this.setVisited(flipcardElementIndex);
-
-            var $frontflipcard = $selectedElement.find('.flipcard-audio-item-front');
-            var $flipcardTitle = $selectedElement.find('.flipcard-audio-item-back-title');
-            var $flipcardBody = $selectedElement.find('.flipcard-audio-item-back-body');
-
-            if ($selectedElement.hasClass('flipcard-audio-flip')) {
-                var item = this.model.get('_items')[flipcardElementIndex];
-                ///// Audio /////
-                if (this.model.has('_audio') && this.model.get('_audio')._isEnabled && Adapt.audio.audioClip[this.model.get('_audio')._channel].status==1) {
-                  // Reset onscreen id
-                  Adapt.audio.audioClip[this.model.get('_audio')._channel].onscreenID = "";
-                  // Trigger audio
-                  Adapt.trigger('audio:playAudio', item._audio.src, this.model.get('_id'), this.model.get('_audio')._channel);
-                }
-                ///// End of Audio /////
-                $flipcardTitle.a11y_text();
-                $flipcardBody.a11y_text();
-                $flipcardTitle.a11y_focus();
-            } else {
-                $frontflipcard.a11y_focus();
-                $flipcardTitle.a11y_on(false);
-                $flipcardBody.a11y_on(false);
-            }
-            $selectedElement.addClass("visited");
         },
 
         // This function will be responsible to perform Single flip on flipcard where only one card can flip and stay in the flipped state.
         performSingleFlip: function($selectedElement) {
-            var flipcardContainer = $selectedElement.closest('.flipcard-audio-widget');
-            if (!Modernizr.csstransforms3d) {
-                var frontflipcard = $selectedElement.find('.flipcard-audio-item-front');
-                var backflipcard = $selectedElement.find('.flipcard-audio-item-back');
-                var flipTime = this.model.get('_flipTime') || 'fast';
 
-                if (backflipcard.is(':visible')) {
-                    backflipcard.fadeOut(flipTime, function() {
-                        frontflipcard.fadeIn(flipTime);
-                    });
-                } else {
-                    var visibleflipcardBack = flipcardContainer.find('.flipcard-audio-item-back:visible');
-                    if (visibleflipcardBack.length > 0) {
-                        visibleflipcardBack.fadeOut(flipTime, function() {
-                            flipcardContainer.find('.flipcard-audio-item-front:hidden').fadeIn(flipTime);
-                        });
-                    }
-                    frontflipcard.fadeOut(flipTime, function() {
-                        backflipcard.fadeIn(flipTime);
-                    });
+          var flipcardElementIndex = this.$('.flipcard-audio-item').index($selectedElement);
 
-                    var $itemFront = $selectedElement.find('.flipcard-audio-item-front');
-                    var $itemTitle = $selectedElement.find('.flipcard-audio-item-back-title');
-                    var $itemBody = $selectedElement.find('.flipcard-audio-item-back-body');
+          this.flipItem(flipcardElementIndex, true);
 
-                    $itemFront.a11y_focus();
-                    $itemTitle.a11y_on(false);
-                    $itemBody.a11y_on(false);
-                }
+        },
+
+        flipItem: function(index, active) {
+
+          var $item = this.$('.flipcard-audio-item').eq(index);
+
+          var flipTime = this.model.get('_flipTime') || 'fast';
+
+          var $frontflipcard = $item.find('.flipcard-audio-item-front');
+          var $backflipcard = $item.find('.flipcard-audio-item-back');
+
+          var $itemTitle = $item.find('.flipcard-audio-item-back-title');
+          var $itemBody = $item.find('.flipcard-audio-item-back-body');
+
+          // If item isn't flipped
+          if(this.itemFlipped[index] == false && active) {
+            if (Modernizr.csstransforms3d) {
+              $item.addClass('flipcard-audio-flip');
             } else {
-                if ($selectedElement.hasClass('flipcard-audio-flip')) {
-                    $selectedElement.removeClass('flipcard-audio-flip');
+              $frontflipcard.fadeOut(flipTime, function() {
+                $backflipcard.fadeIn(flipTime);
+              });
+            }
+            this.itemFlipped[index] = true;
 
-                    var $itemFront = $selectedElement.find('.flipcard-audio-item-front');
-                    var $itemTitle = $selectedElement.find('.flipcard-audio-item-back-title');
-                    var $itemBody = $selectedElement.find('.flipcard-audio-item-back-body');
+            $itemTitle.a11y_text();
+            $itemBody.a11y_text();
+            $itemTitle.a11y_focus();
 
-                    $itemFront.a11y_focus();
-                    $itemTitle.a11y_on(false);
-                    $itemBody.a11y_on(false);
+            ///// Audio /////
+            var item = this.model.get('_items')[index];
+            if (this.model.has('_audio') && this.model.get('_audio')._isEnabled && Adapt.audio.audioClip[this.model.get('_audio')._channel].status==1) {
+              // Reset onscreen id
+              Adapt.audio.audioClip[this.model.get('_audio')._channel].onscreenID = "";
+              // Trigger audio
+              Adapt.trigger('audio:playAudio', item._audio.src, this.model.get('_id'), this.model.get('_audio')._channel);
+            }
+            ///// End of Audio /////
 
-                } else {
-                    flipcardContainer.find('.flipcard-audio-item').removeClass('flipcard-audio-flip');
-                    $selectedElement.addClass('flipcard-audio-flip');
+            this.setVisited(index);
+            $item.addClass("visited");
 
-                    var $itemFront = $selectedElement.find('.flipcard-audio-item-front');
-                    var $itemTitle = $selectedElement.find('.flipcard-audio-item-back-title');
-                    var $itemBody = $selectedElement.find('.flipcard-audio-item-back-body');
-
-                    $itemTitle.a11y_text();
-                    $itemBody.a11y_text();
-                    $itemTitle.a11y_focus();
-
-                    ///// Audio /////
-                    var index = this.$('.flipcard-audio-item').index($selectedElement);
-                    var item = this.model.get('_items')[index];
-                    if (this.model.has('_audio') && this.model.get('_audio')._isEnabled && Adapt.audio.audioClip[this.model.get('_audio')._channel].status==1) {
-                      // Reset onscreen id
-                      Adapt.audio.audioClip[this.model.get('_audio')._channel].onscreenID = "";
-                      // Trigger audio
-                      Adapt.trigger('audio:playAudio', item._audio.src, this.model.get('_id'), this.model.get('_audio')._channel);
-                    }
-                    ///// End of Audio /////
-                }
-                $selectedElement.addClass("visited");
+          } else {
+            // Flip it back
+            if (Modernizr.csstransforms3d) {
+              $item.removeClass('flipcard-audio-flip');
+            } else {
+              $backflipcard.fadeOut(flipTime, function() {
+                $frontflipcard.fadeIn(flipTime);
+              });
             }
 
-            var flipcardElementIndex = this.$('.flipcard-audio-item').index($selectedElement);
-            this.setVisited(flipcardElementIndex);
+            this.itemFlipped[index] = false;
+
+            $frontflipcard.a11y_focus();
+            $itemTitle.a11y_on(false);
+            $itemBody.a11y_on(false);
+          }
+
+
         },
 
         setVisited: function(index) {
