@@ -16,8 +16,6 @@ define([
             // Listen for text change on audio extension
             this.listenTo(Adapt, "audio:changeText", this.replaceText);
 
-            Modernizr.csstransforms3d = false;
-
             this.itemFlipped = new Array();
 
             var itemLength = this.model.get("_items").length;
