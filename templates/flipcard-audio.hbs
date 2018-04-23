@@ -8,13 +8,13 @@
             </div>
             <div class="flipcard-audio-item-face flipcard-audio-item-back">
                 {{#if backTitle}}
-                <div class="flipcard-audio-item-back-title">
-                {{{backTitle}}}
+                <div class="flipcard-audio-item-back-title not-accessible">
+                {{{a11y_text backTitle}}}
                 </div>
                 {{/if}}
                 {{#if backBody}}
-                <div class="flipcard-audio-item-back-body">
-                {{{backBody}}}
+                <div class="flipcard-audio-item-back-body not-accessible">
+                {{{a11y_text backBody}}}
                 </div>
                 {{/if}}
             </div>

@@ -229,8 +229,9 @@ define([
             }
             this.itemFlipped[index] = true;
 
-            $itemTitle.a11y_text();
-            $itemBody.a11y_text();
+            $frontflipcard.a11y_on(false);
+            $backflipcard.a11y_on(true);
+
             $itemTitle.a11y_focus();
 
             ///// Audio /////
@@ -258,11 +259,9 @@ define([
 
             this.itemFlipped[index] = false;
 
-            $frontflipcard.a11y_focus();
-            $itemTitle.a11y_on(false);
-            $itemBody.a11y_on(false);
+            $frontflipcard.a11y_on(true);
+            $backflipcard.a11y_on(false);
           }
-
 
         },
 
