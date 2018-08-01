@@ -40,7 +40,7 @@ define([
                 this.reRender();
             }, this));
 
-            if (this.model.get('_audio') && this.model.get('_audio')._reducedTextisEnabled) {
+            if (Adapt.audio && this.model.get('_audio') && this.model.get('_audio')._reducedTextisEnabled) {
                 this.replaceText(Adapt.audio.textSize);
             }
         },
@@ -286,7 +286,7 @@ define([
         // Reduced text
         replaceText: function(value) {
             // If enabled
-            if (Adapt.course.get('_audio') && Adapt.course.get('_audio')._reducedTextisEnabled && this.model.get('_audio') && this.model.get('_audio')._reducedTextisEnabled) {
+            if (this.model.get('_audio') && this.model.get('_audio')._reducedTextisEnabled) {
                 // Change each items title and body
                 for (var i = 0; i < this.model.get('_items').length; i++) {
                     if(value == 0) {
