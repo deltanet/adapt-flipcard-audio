@@ -23,7 +23,6 @@ define([
             for (var i = 0; i < itemLength; i++) {
               this.itemFlipped[i] = false;
             }
-
         },
 
         postRender: function() {
@@ -155,7 +154,6 @@ define([
             $item.height(height);
 
           }
-
         },
 
         onClickFlipItem: function(event) {
@@ -194,7 +192,6 @@ define([
               this.flipItem(i, false);
             }
           }
-
         },
 
         // This function will be responsible to perform Single flip on flipcard where only one card can flip and stay in the flipped state.
@@ -203,7 +200,6 @@ define([
           var flipcardElementIndex = this.$('.flipcard-audio-item').index($selectedElement);
 
           this.flipItem(flipcardElementIndex, true);
-
         },
 
         flipItem: function(index, active) {
@@ -229,11 +225,6 @@ define([
             }
             this.itemFlipped[index] = true;
 
-            $frontflipcard.a11y_on(false);
-            $backflipcard.a11y_on(true);
-
-            $itemTitle.a11y_focus();
-
             ///// Audio /////
             var item = this.model.get('_items')[index];
             if (this.model.has('_audio') && this.model.get('_audio')._isEnabled && Adapt.audio.audioClip[this.model.get('_audio')._channel].status==1) {
@@ -247,6 +238,14 @@ define([
             this.setVisited(index);
             $item.addClass("visited");
 
+            var a11y = Adapt.config.get('_accessibility');
+            if (!a11y || !a11y._isActive) return;
+            _.delay(function() {
+                $frontflipcard.a11y_on(false);
+                $backflipcard.a11y_on(true);
+                $itemTitle.a11y_focus();
+            }, 500);
+
           } else {
             // Flip it back
             if (Modernizr.csstransforms3d) {
@@ -259,10 +258,12 @@ define([
 
             this.itemFlipped[index] = false;
 
+            var a11y = Adapt.config.get('_accessibility');
+            if (!a11y || !a11y._isActive) return;
+
             $frontflipcard.a11y_on(true);
             $backflipcard.a11y_on(false);
           }
-
         },
 
         setVisited: function(index) {
