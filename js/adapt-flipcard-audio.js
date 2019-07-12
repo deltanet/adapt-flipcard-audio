@@ -159,12 +159,6 @@ define([
         onClickFlipItem: function(event) {
             if (event && event.preventDefault) event.preventDefault();
 
-            ///// Audio /////
-            if (this.model.has('_audio') && this.model.get('_audio')._isEnabled && Adapt.audio.audioClip[this.model.get('_audio')._channel].status==1) {
-                Adapt.trigger('audio:pauseAudio', this.model.get('_audio')._channel);
-            }
-            ///// End of Audio /////
-
             var $selectedElement = $(event.currentTarget);
 
             var flipType = this.model.get('_flipType');
@@ -174,6 +168,13 @@ define([
                 this.performSingleFlip($selectedElement);
             }
             this.resizeHeights();
+
+            ///// Audio /////
+            if (!Adapt.audio) return;
+            if (this.model.has('_audio') && this.model.get('_audio')._isEnabled && Adapt.audio.audioClip[this.model.get('_audio')._channel].status==1) {
+                Adapt.trigger('audio:pauseAudio', this.model.get('_audio')._channel);
+            }
+            ///// End of Audio /////
         },
 
         // This function will be responsible to perform All flip on flipcard where all cards can flip and stay in the flipped state.
@@ -225,16 +226,6 @@ define([
             }
             this.itemFlipped[index] = true;
 
-            ///// Audio /////
-            var item = this.model.get('_items')[index];
-            if (this.model.has('_audio') && this.model.get('_audio')._isEnabled && Adapt.audio.audioClip[this.model.get('_audio')._channel].status==1) {
-              // Reset onscreen id
-              Adapt.audio.audioClip[this.model.get('_audio')._channel].onscreenID = "";
-              // Trigger audio
-              Adapt.trigger('audio:playAudio', item._audio.src, this.model.get('_id'), this.model.get('_audio')._channel);
-            }
-            ///// End of Audio /////
-
             this.setVisited(index);
             $item.addClass("visited");
 
@@ -245,6 +236,17 @@ define([
                 $backflipcard.a11y_on(true);
                 $itemTitle.a11y_focus();
             }, 500);
+
+            ///// Audio /////
+            if (!Adapt.audio) return;
+            var item = this.model.get('_items')[index];
+            if (this.model.has('_audio') && this.model.get('_audio')._isEnabled && Adapt.audio.audioClip[this.model.get('_audio')._channel].status==1) {
+              // Reset onscreen id
+              Adapt.audio.audioClip[this.model.get('_audio')._channel].onscreenID = "";
+              // Trigger audio
+              Adapt.trigger('audio:playAudio', item._audio.src, this.model.get('_id'), this.model.get('_audio')._channel);
+            }
+            ///// End of Audio /////
 
           } else {
             // Flip it back
