@@ -1,20 +1,22 @@
+{{! make the _globals object in course.json available to this template}}
+{{import_globals}}
 <div class="flipcard-audio-inner component-inner" role="region" aria-label="{{_globals._components._flipcardAudio.ariaRegion}}">
     {{> component this}}
     <div class="flipcard-audio-widget component-widget clearfix">
         {{#each _items}}
         <div class="flipcard-audio-item">
             <div class="flipcard-audio-item-face flipcard-audio-item-front">
-                <img src="{{frontImage.src}}" class="flipcard-audio-item-frontImage" aria-label="{{frontImage.alt}}" tabindex="0">
+                <img src="{{frontImage.src}}" class="flipcard-audio-item-frontImage" aria-label="{{frontImage.alt}}">
             </div>
             <div class="flipcard-audio-item-face flipcard-audio-item-back">
                 {{#if backTitle}}
                 <div class="flipcard-audio-item-back-title not-accessible">
-                {{{compile_a11y_text backTitle}}}
+                {{{compile backTitle}}}
                 </div>
                 {{/if}}
                 {{#if backBody}}
                 <div class="flipcard-audio-item-back-body not-accessible">
-                {{{compile_a11y_text backBody}}}
+                {{{compile backBody}}}
                 </div>
                 {{/if}}
             </div>
