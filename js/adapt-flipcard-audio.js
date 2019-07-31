@@ -1,7 +1,7 @@
 define([
-    'coreViews/componentView',
-    'coreJS/adapt'
-], function(ComponentView, Adapt) {
+    'core/js/adapt',
+    'core/js/views/componentView'
+], function(Adapt, ComponentView) {
 
     var FlipcardAudio = ComponentView.extend({
 
@@ -16,7 +16,7 @@ define([
             // Listen for text change on audio extension
             this.listenTo(Adapt, "audio:changeText", this.replaceText);
 
-            this.itemFlipped = new Array();
+            this.itemFlipped = [];
 
             var itemLength = this.model.get("_items").length;
 
@@ -26,13 +26,9 @@ define([
         },
 
         postRender: function() {
-            if (!Modernizr.csstransforms3d) {
-              this.$('.flipcard-audio-item-back').hide();
-            } else {
-              this.$('.flipcard-audio-item-front').addClass('animated');
-              this.$('.flipcard-audio-item-back').addClass('animated');
-              this.$('.flipcard-audio-item-face').addClass('animated');
-            }
+            this.$('.flipcard-audio-item-front').addClass('animated');
+            this.$('.flipcard-audio-item-back').addClass('animated');
+            this.$('.flipcard-audio-item-face').addClass('animated');
 
             this.$('.flipcard-audio-widget').imageready(_.bind(function() {
                 this.setReadyStatus();
@@ -63,7 +59,7 @@ define([
         },
 
         checkInRow: function($selectedElement) {
-            if(Adapt.device.screenSize === "large") {
+            if (Adapt.device.screenSize === "large") {
                 var inRow = this.model.get("_inRow");
                 var itemInRow = (98 / inRow) - inRow;
 
@@ -216,14 +212,9 @@ define([
           var $itemBody = $item.find('.flipcard-audio-item-back-body');
 
           // If item isn't flipped
-          if(this.itemFlipped[index] == false && active) {
-            if (Modernizr.csstransforms3d) {
-              $item.addClass('flipcard-audio-flip');
-            } else {
-              $frontflipcard.fadeOut(flipTime, function() {
-                $backflipcard.fadeIn(flipTime);
-              });
-            }
+          if (this.itemFlipped[index] == false && active) {
+
+            $item.addClass('flipcard-audio-flip');
             this.itemFlipped[index] = true;
 
             this.setVisited(index);
@@ -242,13 +233,7 @@ define([
 
           } else {
             // Flip it back
-            if (Modernizr.csstransforms3d) {
-              $item.removeClass('flipcard-audio-flip');
-            } else {
-              $backflipcard.fadeOut(flipTime, function() {
-                $frontflipcard.fadeIn(flipTime);
-              });
-            }
+            $item.removeClass('flipcard-audio-flip');
 
             this.itemFlipped[index] = false;
           }
