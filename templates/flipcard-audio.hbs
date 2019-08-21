@@ -1,24 +1,31 @@
 <div class="flipcard-audio-inner component-inner">
     {{> component this}}
-    <div class="flipcard-audio-widget component-widget clearfix">
-        {{#each _items}}
-        <div class="flipcard-audio-item">
-            <div class="flipcard-audio-item-face flipcard-audio-item-front">
-                <img src="{{frontImage.src}}" class="flipcard-audio-item-frontImage" aria-label="{{frontImage.alt}}">
+    <div class="component-widget flipcard-audio-widget">
+        <div role="list" class="flipcard-audio-items">
+            {{#each _items}}
+            <div role="listitem" class="flipcard-audio-listitem">
+                <button class="base flipcard-audio-item{{#if _isVisited}} visited{{/if}}" data-index="{{@index}}">
+                    <span class="aria-label">
+                        {{#if frontImage.alt}}{{frontImage.alt}}{{else}}{{../_globals._accessibility._ariaLabels.item}} {{numbers @index}}{{/if}}.{{#if frontImage.alt}} {{frontImage.alt}}.{{/if}}
+                    </span>
+                    <div class="flipcard-audio-item-face flipcard-audio-item-front">
+                        <img src="{{frontImage.src}}" class="flipcard-audio-item-frontImage">
+                    </div>
+                    <div class="flipcard-audio-item-face flipcard-audio-item-back" aria-hidden="true">
+                        {{#if backTitle}}
+                        <div class="flipcard-audio-item-back-title">
+                          {{{compile backTitle}}}
+                        </div>
+                        {{/if}}
+                        {{#if backBody}}
+                        <div class="flipcard-audio-item-back-body">
+                          {{{compile backBody}}}
+                        </div>
+                        {{/if}}
+                    </div>
+                </button>
             </div>
-            <div class="flipcard-audio-item-face flipcard-audio-item-back">
-                {{#if backTitle}}
-                <div class="flipcard-audio-item-back-title not-accessible">
-                {{{compile backTitle}}}
-                </div>
-                {{/if}}
-                {{#if backBody}}
-                <div class="flipcard-audio-item-back-body not-accessible">
-                {{{compile backBody}}}
-                </div>
-                {{/if}}
-            </div>
+            {{/each}}
         </div>
-        {{/each}}
     </div>
 </div>

@@ -56,6 +56,7 @@ define([
         reRender: function() {
             this.checkInRow();
             this.resizeHeights();
+            this.handleTabs();
         },
 
         checkInRow: function($selectedElement) {
@@ -63,23 +64,23 @@ define([
                 var inRow = this.model.get("_inRow");
                 var itemInRow = (98 / inRow) - inRow;
 
-                this.$(".flipcard-audio-item").css({
+                this.$(".flipcard-audio-listitem").css({
                     width: itemInRow + "%"
                 });
                 this.setItemlayout();
-                this.$(".flipcard-audio-item").css({ "margin-left" : "1%" });
-                this.$(".flipcard-audio-item").css({ "margin-right" : "1%" });
+                this.$(".flipcard-audio-listitem").css({ "margin-left" : "1%" });
+                this.$(".flipcard-audio-listitem").css({ "margin-right" : "1%" });
             } else {
-                this.$(".flipcard-audio-item").css({ "width" : "100%" });
-                this.$(".flipcard-audio-item").css({ "margin-left" : "0px" });
-                this.$(".flipcard-audio-item").css({ "margin-right" : "0px" });
+                this.$(".flipcard-audio-listitem").css({ "width" : "100%" });
+                this.$(".flipcard-audio-listitem").css({ "margin-left" : "0px" });
+                this.$(".flipcard-audio-listitem").css({ "margin-right" : "0px" });
             }
         },
 
         setItemlayout: function() {
             var columns = this.model.get("_inRow");
             var itemLength = this.model.get("_items").length;
-            var $items = this.$(".flipcard-audio-item");
+            var $items = this.$(".flipcard-audio-listitem");
             var itemRemainder = itemLength % columns;
             if (itemRemainder !== 0) {
                 if (itemRemainder === 1) {
@@ -119,7 +120,7 @@ define([
         },
 
         resizeHeights: function() {
-          var $items = this.$(".flipcard-audio-item");
+          var $items = this.$(".flipcard-audio-listitem");
           var itemLength = this.model.get("_items").length;
 
           for (var i = 0; i < itemLength; i++) {
@@ -148,8 +149,11 @@ define([
             }
 
             $item.height(height);
-
           }
+        },
+
+        handleTabs: function() {
+            this.$('.flipcard-audio-item-back').a11y_cntrl_enabled(false);
         },
 
         onClickFlipItem: function(event) {
@@ -220,6 +224,8 @@ define([
             this.setVisited(index);
             $item.addClass("visited");
 
+            $backflipcard.a11y_cntrl_enabled(true);
+
             ///// Audio /////
             if (!Adapt.audio) return;
             var item = this.model.get('_items')[index];
@@ -234,6 +240,8 @@ define([
           } else {
             // Flip it back
             $item.removeClass('flipcard-audio-flip');
+
+            $backflipcard.a11y_cntrl_enabled(false);
 
             this.itemFlipped[index] = false;
           }
