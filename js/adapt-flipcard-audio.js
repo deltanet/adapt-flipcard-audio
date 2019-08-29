@@ -159,6 +159,12 @@ define([
         onClickFlipItem: function(event) {
             if (event && event.preventDefault) event.preventDefault();
 
+            ///// Audio /////
+            if (Adapt.audio && this.model.has('_audio') && this.model.get('_audio')._isEnabled && Adapt.audio.audioClip[this.model.get('_audio')._channel].status==1) {
+                Adapt.trigger('audio:pauseAudio', this.model.get('_audio')._channel);
+            }
+            ///// End of Audio /////
+
             var $selectedElement = $(event.currentTarget);
 
             var flipType = this.model.get('_flipType');
@@ -167,14 +173,8 @@ define([
             } else if (flipType === 'singleFlip') {
                 this.performSingleFlip($selectedElement);
             }
-            this.resizeHeights();
 
-            ///// Audio /////
-            if (!Adapt.audio) return;
-            if (this.model.has('_audio') && this.model.get('_audio')._isEnabled && Adapt.audio.audioClip[this.model.get('_audio')._channel].status==1) {
-                Adapt.trigger('audio:pauseAudio', this.model.get('_audio')._channel);
-            }
-            ///// End of Audio /////
+            this.resizeHeights();
         },
 
         // This function will be responsible to perform All flip on flipcard where all cards can flip and stay in the flipped state.
@@ -221,21 +221,20 @@ define([
             $item.addClass('flipcard-audio-flip');
             this.itemFlipped[index] = true;
 
-            this.setVisited(index);
-            $item.addClass("visited");
-
-            $backflipcard.a11y_cntrl_enabled(true);
-
             ///// Audio /////
-            if (!Adapt.audio) return;
             var item = this.model.get('_items')[index];
-            if (this.model.has('_audio') && this.model.get('_audio')._isEnabled && Adapt.audio.audioClip[this.model.get('_audio')._channel].status==1) {
+            if (Adapt.audio && this.model.has('_audio') && this.model.get('_audio')._isEnabled && Adapt.audio.audioClip[this.model.get('_audio')._channel].status==1) {
               // Reset onscreen id
               Adapt.audio.audioClip[this.model.get('_audio')._channel].onscreenID = "";
               // Trigger audio
               Adapt.trigger('audio:playAudio', item._audio.src, this.model.get('_id'), this.model.get('_audio')._channel);
             }
             ///// End of Audio /////
+
+            this.setVisited(index);
+            $item.addClass("visited");
+
+            $backflipcard.a11y_cntrl_enabled(true);
 
           } else {
             // Flip it back
