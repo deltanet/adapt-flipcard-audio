@@ -1,7 +1,8 @@
 define([
     'core/js/adapt',
-    'core/js/views/componentView'
-], function(Adapt, ComponentView) {
+    'core/js/views/componentView',
+    'core/js/models/componentModel'
+], function(Adapt, ComponentView, ComponentModel) {
 
     var FlipcardAudio = ComponentView.extend({
 
@@ -204,7 +205,6 @@ define([
         },
 
         flipItem: function(index, active) {
-
           var $item = this.$('.flipcard-audio-item').eq(index);
 
           var flipTime = this.model.get('_flipTime') || 'fast';
@@ -217,7 +217,6 @@ define([
 
           // If item isn't flipped
           if (this.itemFlipped[index] == false && active) {
-
             $item.addClass('flipcard-audio-flip');
             this.itemFlipped[index] = true;
 
@@ -232,7 +231,7 @@ define([
             ///// End of Audio /////
 
             this.setVisited(index);
-            $item.addClass("visited");
+            $item.addClass("is-visited");
 
             $backflipcard.a11y_cntrl_enabled(true);
 
@@ -283,8 +282,9 @@ define([
 
     });
 
-    Adapt.register('flipcard-audio', FlipcardAudio);
-
-    return FlipcardAudio;
+    return Adapt.register('flipcard-audio', {
+      model: ComponentModel.extend({}),
+      view: FlipcardAudio
+    });
 
 });

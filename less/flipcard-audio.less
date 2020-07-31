@@ -4,6 +4,7 @@
 @flipcard-audio-item-rotate-Y-plus180deg: rotateY(180deg);
 @flipcard-audio-item-rotate-Y-0deg: rotateY(0deg);
 
+
 .vendor-prefix (@property, @value) {
   -webkit-@{property}: @value;
   -moz-@{property}: @value;
@@ -12,7 +13,7 @@
   @{property}: @value;
 }
 
-.flipcard-audio-component {
+.flipcard-audio {
 
   .flipcard-audio-widget {
 		position: relative;
@@ -22,22 +23,22 @@
   .flipcard-audio-listitem {
     position: relative;
     display: inline-block;
-    margin-top: @component-padding;
+    margin-top: @item-margin;
   }
 
   .flipcard-audio-item {
     vertical-align: top;
     margin-left: 1%;
     margin-right: 1%;
-    color: @primary-color-inverted;
+    color: @font-color-inverted;
 
     &:hover {
-      color: @primary-color-inverted;
+      color: @font-color-inverted;
     }
 
-    &.visited {
+    &.is-visited {
       .flipcard-audio-item-front {
-        border: 3px solid @item-color-visited;
+        border: 3px solid @visited;
       }
     }
   }
@@ -107,12 +108,11 @@
   }
 
   .flipcard-audio-item-back-title {
-    padding-bottom: @component-padding;
-    .sub-title;
+    padding-bottom: @item-padding;
   }
 
   .flipcard-audio-item-back-body {
-    font-weight: @body-text-font-weight;
+    font-weight: @font-weight-regular;
   }
 
   @media all and (max-width: @device-width-medium) {

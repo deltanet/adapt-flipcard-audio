@@ -1,10 +1,10 @@
-<div class="flipcard-audio-inner component-inner">
+<div class="component__inner flipcard-audio__inner">
     {{> component this}}
-    <div class="component-widget flipcard-audio-widget">
+    <div class="component__widget flipcard-audio-widget">
         <div role="list" class="flipcard-audio-items">
             {{#each _items}}
             <div role="listitem" class="flipcard-audio-listitem">
-                <button class="base flipcard-audio-item{{#if _isVisited}} visited{{/if}}" data-index="{{@index}}">
+                <button class="base flipcard-audio-item{{#if _isVisited}} is-visited{{/if}}" data-index="{{@index}}">
                     <span class="aria-label">
                         {{#if frontImage.alt}}{{frontImage.alt}}{{else}}{{../_globals._accessibility._ariaLabels.item}} {{numbers @index}}{{/if}}.{{#if frontImage.alt}} {{frontImage.alt}}.{{/if}}
                     </span>
