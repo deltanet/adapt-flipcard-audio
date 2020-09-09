@@ -7,7 +7,7 @@ define([
     var FlipcardAudio = ComponentView.extend({
 
         events: {
-            'click .flipcard-audio-item': 'onClickFlipItem'
+            'click .js-flipcard-toggle': 'onClickFlipItem'
         },
 
         preRender: function() {
@@ -27,11 +27,11 @@ define([
         },
 
         postRender: function() {
-            this.$('.flipcard-audio-item-front').addClass('animated');
-            this.$('.flipcard-audio-item-back').addClass('animated');
-            this.$('.flipcard-audio-item-face').addClass('animated');
+            this.$('.flipcard-audio__item-front').addClass('animated');
+            this.$('.flipcard-audio__item-back').addClass('animated');
+            this.$('.flipcard-audio__item-face').addClass('animated');
 
-            this.$('.flipcard-audio-widget').imageready(_.bind(function() {
+            this.$('.flipcard-audio__widget').imageready(_.bind(function() {
                 this.setReadyStatus();
                 this.reRender();
             }, this));
@@ -65,23 +65,23 @@ define([
                 var inRow = this.model.get("_inRow");
                 var itemInRow = (98 / inRow) - inRow;
 
-                this.$(".flipcard-audio-listitem").css({
+                this.$(".flipcard-audio__listitem").css({
                     width: itemInRow + "%"
                 });
                 this.setItemlayout();
-                this.$(".flipcard-audio-listitem").css({ "margin-left" : "1%" });
-                this.$(".flipcard-audio-listitem").css({ "margin-right" : "1%" });
+                this.$(".flipcard-audio__listitem").css({ "margin-left" : "1%" });
+                this.$(".flipcard-audio__listitem").css({ "margin-right" : "1%" });
             } else {
-                this.$(".flipcard-audio-listitem").css({ "width" : "100%" });
-                this.$(".flipcard-audio-listitem").css({ "margin-left" : "0px" });
-                this.$(".flipcard-audio-listitem").css({ "margin-right" : "0px" });
+                this.$(".flipcard-audio__listitem").css({ "width" : "100%" });
+                this.$(".flipcard-audio__listitem").css({ "margin-left" : "0px" });
+                this.$(".flipcard-audio__listitem").css({ "margin-right" : "0px" });
             }
         },
 
         setItemlayout: function() {
             var columns = this.model.get("_inRow");
             var itemLength = this.model.get("_items").length;
-            var $items = this.$(".flipcard-audio-listitem");
+            var $items = this.$(".flipcard-audio__listitem");
             var itemRemainder = itemLength % columns;
             if (itemRemainder !== 0) {
                 if (itemRemainder === 1) {
@@ -121,7 +121,7 @@ define([
         },
 
         resizeHeights: function() {
-          var $items = this.$(".flipcard-audio-listitem");
+          var $items = this.$(".flipcard-audio__listitem");
           var itemLength = this.model.get("_items").length;
 
           for (var i = 0; i < itemLength; i++) {
@@ -129,10 +129,10 @@ define([
             var height = null;
 
             var $item = $items.eq(i);
-            var height = $item.find('.flipcard-audio-item-frontImage').height();
+            var height = $item.find('.flipcard-audio__item-frontImage').height();
 
-            var $frontflipcard = $item.find('.flipcard-audio-item-frontImage');
-            var $backflipcard = $item.find('.flipcard-audio-item-back');
+            var $frontflipcard = $item.find('.flipcard-audio__item-frontImage');
+            var $backflipcard = $item.find('.flipcard-audio__item-back');
 
             // reset
             $item.css('height','auto');
@@ -154,7 +154,9 @@ define([
         },
 
         handleTabs: function() {
-            this.$('.flipcard-audio-item-back').a11y_cntrl_enabled(false);
+            //this.$('.flipcard-audio__item-back').a11y_cntrl_enabled(false);
+            var $itemBack = this.$('.flipcard-audio__item-back');
+            Adapt.a11y.toggleAccessibleEnabled($itemBack, false);
         },
 
         onClickFlipItem: function(event) {
@@ -181,7 +183,7 @@ define([
         // This function will be responsible to perform All flip on flipcard where all cards can flip and stay in the flipped state.
         performAllFlip: function($selectedElement) {
 
-          var flipcardElementIndex = this.$('.flipcard-audio-item').index($selectedElement);
+          var flipcardElementIndex = this.$('.flipcard-audio__item').index($selectedElement);
 
           // Flip item that is clicked on
           this.flipItem(flipcardElementIndex, true);
@@ -199,21 +201,21 @@ define([
         // This function will be responsible to perform Single flip on flipcard where only one card can flip and stay in the flipped state.
         performSingleFlip: function($selectedElement) {
 
-          var flipcardElementIndex = this.$('.flipcard-audio-item').index($selectedElement);
+          var flipcardElementIndex = this.$('.flipcard-audio__item').index($selectedElement);
 
           this.flipItem(flipcardElementIndex, true);
         },
 
         flipItem: function(index, active) {
-          var $item = this.$('.flipcard-audio-item').eq(index);
+          var $item = this.$('.flipcard-audio__item').eq(index);
 
           var flipTime = this.model.get('_flipTime') || 'fast';
 
-          var $frontflipcard = $item.find('.flipcard-audio-item-front');
-          var $backflipcard = $item.find('.flipcard-audio-item-back');
+          var $frontflipcard = $item.find('.flipcard-audio__item-front');
+          var $backflipcard = $item.find('.flipcard-audio__item-back');
 
-          var $itemTitle = $item.find('.flipcard-audio-item-back-title');
-          var $itemBody = $item.find('.flipcard-audio-item-back-body');
+          var $itemTitle = $item.find('.flipcard-audio__item-back-title');
+          var $itemBody = $item.find('.flipcard-audio__item-back-body');
 
           // If item isn't flipped
           if (this.itemFlipped[index] == false && active) {
@@ -233,13 +235,15 @@ define([
             this.setVisited(index);
             $item.addClass("is-visited");
 
-            $backflipcard.a11y_cntrl_enabled(true);
+            //$backflipcard.a11y_cntrl_enabled(true);
+            Adapt.a11y.toggleAccessibleEnabled($backflipcard, true);
 
           } else {
             // Flip it back
             $item.removeClass('flipcard-audio-flip');
 
-            $backflipcard.a11y_cntrl_enabled(false);
+            //$backflipcard.a11y_cntrl_enabled(false);
+            Adapt.a11y.toggleAccessibleEnabled($backflipcard, true);
 
             this.itemFlipped[index] = false;
           }
@@ -270,11 +274,11 @@ define([
                 // Change each items title and body
                 for (var i = 0; i < this.model.get('_items').length; i++) {
                     if(value == 0) {
-                        this.$('.flipcard-audio-item-back-title').eq(i).html(this.model.get('_items')[i].backTitle);
-                        this.$('.flipcard-audio-item-back-body').eq(i).html(this.model.get('_items')[i].backBody);
+                        this.$('.flipcard-audio__item-back-title').eq(i).html(this.model.get('_items')[i].backTitle);
+                        this.$('.flipcard-audio__item-back-body').eq(i).html(this.model.get('_items')[i].backBody);
                     } else {
-                        this.$('.flipcard-audio-item-back-title').eq(i).html(this.model.get('_items')[i].backTitleReduced);
-                        this.$('.flipcard-audio-item-back-body').eq(i).html(this.model.get('_items')[i].backBodyReduced);
+                        this.$('.flipcard-audio__item-back-title').eq(i).html(this.model.get('_items')[i].backTitleReduced);
+                        this.$('.flipcard-audio__item-back-body').eq(i).html(this.model.get('_items')[i].backBodyReduced);
                     }
                 }
             }
