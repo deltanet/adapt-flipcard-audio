@@ -30,14 +30,18 @@
     vertical-align: top;
     margin-left: 1%;
     margin-right: 1%;
-    color: @font-color-inverted;
+    color: @item-color-inverted-selected;
 
     &:hover {
-      color: @font-color-inverted;
+      color: @item-color-inverted-selected;
     }
 
     &.is-visited {
       border: 3px solid @visited;
+
+      .flipcard-audio__item-front {
+        border: 3px solid @visited;
+      }
     }
 
     @media all and (max-width: @device-width-medium) {
@@ -57,7 +61,7 @@
     width: 100%;
     height: auto;
     min-height: 100%;
-    background: @item-color;
+    background: @item-color-selected;
     cursor: pointer;
 
     text-align: left;
@@ -83,14 +87,11 @@
     &.animated {
       .vendor-prefix (transform, @flipcard-audio-item-rotate-Y-0deg);
     }
-    &.is-visited {
-      border: 3px solid @visited;
-    }
   }
 
   &__item-back {
     padding: @item-padding;
-    border: 3px solid @item-color;
+    border: 3px solid @item-color-selected;
     width: 100%;
 
     .vendor-prefix (box-sizing, border-box);
@@ -102,6 +103,7 @@
 
   &__item-back-title {
     padding-bottom: @item-padding;
+    .item-title;
   }
 
   &__item-back-body {

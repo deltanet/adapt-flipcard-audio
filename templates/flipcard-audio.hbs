@@ -4,7 +4,7 @@
         <div role="list" class="flipcard-audio__items">
             {{#each _items}}
             <div role="listitem" class="flipcard-audio__listitem">
-                <button class="base flipcard-audio__item js-flipcard-toggle{{#if _isVisited}} is-visited{{/if}}" data-index="{{@index}}">
+                <button class="flipcard-audio__item js-flipcard-toggle{{#if _isVisited}} is-visited{{/if}}" data-index="{{@index}}">
                     <span class="aria-label">
                         {{#if frontImage.alt}}{{frontImage.alt}}{{else}}{{../_globals._accessibility._ariaLabels.item}} {{numbers @index}}{{/if}}.{{#if frontImage.alt}} {{frontImage.alt}}.{{/if}}
                     </span>
