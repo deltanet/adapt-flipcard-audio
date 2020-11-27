@@ -163,7 +163,7 @@ define([
       if (event && event.preventDefault) event.preventDefault();
 
       ///// Audio /////
-      if (Adapt.audio && this.model.has('_audio') && this.model.get('_audio')._isEnabled && Adapt.audio.audioClip[this.model.get('_audio')._channel].status === 1) {
+      if (Adapt.audio && this.model.has('_audio') && this.model.get('_audio')._isEnabled && Adapt.audio.audioClip[this.model.get('_audio')._channel].status == 1) {
         Adapt.trigger('audio:pauseAudio', this.model.get('_audio')._channel);
       }
       ///// End of Audio /////
@@ -217,7 +217,7 @@ define([
 
         ///// Audio /////
         var item = this.model.get('_items')[index];
-        if (Adapt.audio && this.model.has('_audio') && this.model.get('_audio')._isEnabled && Adapt.audio.audioClip[this.model.get('_audio')._channel].status === 1) {
+        if (Adapt.audio && this.model.has('_audio') && this.model.get('_audio')._isEnabled && Adapt.audio.audioClip[this.model.get('_audio')._channel].status == 1) {
           // Reset onscreen id
           Adapt.audio.audioClip[this.model.get('_audio')._channel].onscreenID = '';
           // Trigger audio
