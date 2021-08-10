@@ -4,6 +4,7 @@
 @flipcard-audio-item-rotate-Y-plus180deg: rotateY(180deg);
 @flipcard-audio-item-rotate-Y-0deg: rotateY(0deg);
 
+
 .vendor-prefix (@property, @value) {
   -webkit-@{property}: @value;
   -moz-@{property}: @value;
@@ -12,71 +13,52 @@
   @{property}: @value;
 }
 
-.flipcard-audio-component {
+.flipcard-audio {
 
-  .flipcard-audio-widget {
+  &__widget {
 		position: relative;
 		text-align: center;
 	}
 
-  .flipcard-audio-listitem {
+  &__listitem {
     position: relative;
     display: inline-block;
-    margin-top: @component-padding;
+    margin-top: @item-margin;
   }
 
-  .flipcard-audio-item {
+  &__item {
     vertical-align: top;
     margin-left: 1%;
     margin-right: 1%;
-    color: @primary-color-inverted;
+    color: @item-color-inverted-selected;
+    line-height: @body-line-height;
 
     &:hover {
-      color: @primary-color-inverted;
+      color: @item-color-inverted-selected;
     }
 
-    &.visited {
-      .flipcard-audio-item-front {
-        border: 3px solid @item-color-visited;
+    &.is-visited {
+      .flipcard-audio__item-front {
+        border: 3px solid @visited;
       }
     }
-  }
 
-  .flipcard-audio-item-front {
-    border: 3px solid @item-color;
-    &:hover {
-      border: 3px solid @item-color-hover;
-    }
-    img {
-      vertical-align: top;
-    }
-    &.animated {
-      .vendor-prefix (transform, @flipcard-audio-item-rotate-Y-0deg);
+    @media all and (max-width: @device-width-medium) {
+      width: 100%;
+      margin-left: 0%;
+      margin-right: 0%;
     }
   }
 
-  .flipcard-audio-item-back {
-    padding: @item-padding;
-    border: 3px solid @primary-color;
-    width: 100%;
-
-    .vendor-prefix (box-sizing, border-box);
-
-    &.animated {
-      .vendor-prefix (transform, @flipcard-audio-item-rotate-Y-minus180deg);
-    }
-  }
-
-  .flipcard-audio-item-face {
+  &__item-face {
     float: none;
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 110;
     width: 100%;
     height: auto;
     min-height: 100%;
-    background: @primary-color;
+    background: @item-color-selected;
     cursor: pointer;
 
     text-align: left;
@@ -91,35 +73,52 @@
     .vendor-prefix (backface-visibility, hidden);
   }
 
-  .flipcard-audio-item .flipcard-audio-item-frontImage {
+  &__item-front {
+    border: 3px solid @item-color;
+    &:hover {
+      border: 3px solid @item-color-hover;
+    }
+    img {
+      vertical-align: top;
+    }
+    &.animated {
+      .vendor-prefix (transform, @flipcard-audio-item-rotate-Y-0deg);
+    }
+  }
+
+  &__item-back {
+    padding: @item-padding;
+    border: 3px solid @item-color-selected;
+    width: 100%;
+
+    .vendor-prefix (box-sizing, border-box);
+
+    &.animated {
+      .vendor-prefix (transform, @flipcard-audio-item-rotate-Y-minus180deg);
+    }
+  }
+
+  &__item-back-title {
+    padding-bottom: @item-padding;
+    .item-title;
+  }
+
+  &__item-back-body {
+    font-weight: @font-weight-regular;
+  }
+
+  .flipcard-audio-item .flipcard-audio__item-frontImage {
     width: 100%;
     height: auto;
   }
 
-  .flipcard-audio-flip .flipcard-audio-item-front {
+  .flipcard-audio-flip .flipcard-audio__item-front {
     .vendor-prefix (transform, @flipcard-audio-item-rotate-Y-plus180deg);
   }
 
-  .flipcard-audio-flip .flipcard-audio-item-back {
+  .flipcard-audio-flip .flipcard-audio__item-back {
     overflow-x: hidden;
     overflow-y: auto;
     .vendor-prefix (transform, @flipcard-audio-item-rotate-Y-0deg);
-  }
-
-  .flipcard-audio-item-back-title {
-    padding-bottom: @component-padding;
-    .sub-title;
-  }
-
-  .flipcard-audio-item-back-body {
-    font-weight: @body-text-font-weight;
-  }
-
-  @media all and (max-width: @device-width-medium) {
-    .flipcard-audio-item {
-      width: 100%;
-      margin-left: 0%;
-      margin-right: 0%;
-    }
   }
 }
