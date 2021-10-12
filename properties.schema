@@ -141,6 +141,8 @@
                 "title": "Audio",
                 "inputType": "Asset:audio",
                 "validators": [],
+                "audioSources": ["_items/#/backBody"],
+                "audioConditions": [],
                 "help": "Optional audio for this flipcard element"
               }
             }
