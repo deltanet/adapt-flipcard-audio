@@ -53,8 +53,8 @@ The attributes listed below are used in *components.json* to configure **Flip ca
 No known limitations.  
 
 ----------------------------
-**Version number:**  4.1.0  
-**Framework versions:** 5+  
+**Version number:**  4.2.0  
+**Framework versions:** 5.8+  
 **Author / maintainer:** Deltanet with [contributors](https://github.com/deltanet/adapt-flipcard-audio/graphs/contributors)  
 **Accessibility support:** yes   
 **RTL support:** yes   

@@ -1,11 +1,11 @@
 {
 	"name": "adapt-flipcard-audio",
-	"version": "4.1.0",
-	"framework": ">=5",
+	"version": "4.2.0",
+	"framework": ">=5.8",
 	"homepage": "https://github.com/deltanet/adapt-flipcard-audio",
 	"issues": "https://github.com/deltanet/adapt-flipcard-audio/issues",
 	"description": "A component that displays clickable images, which reveal display text.",
-	"main": "/js/adapt-flipcard-audio.js",
+	"main": "/js/adapt-flipcard.js",
 	"displayName" : "Flipcard",
 	"component" : "flipcard-audio",
 	"keywords": [
