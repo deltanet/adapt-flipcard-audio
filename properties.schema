@@ -35,19 +35,18 @@
       "required": true,
       "enum": ["allFlip", "singleFlip"],
       "inputType": {"type": "Select", "options": ["allFlip", "singleFlip"]},
-      "title": "Set flip type",
+      "title": "Flip Type",
       "default": "allFlip",
-      "validators": ["required"],
-      "help": "'singleFlip' or 'allFlip'"
+      "validators": ["required"]
     },
-    "_flipTime": {
-      "type": "number",
+    "_animation": {
+      "type": "string",
       "required": true,
-      "inputType": "Number",
-      "title": "Flip animation time",
-      "default": 400,
-      "validators": ["required", "number"],
-      "help": "How much time should the flip animation takes"
+      "enum": ["flipY", "flipX", "slideUp", "slideDown", "slideLeft", "slideRight"],
+      "inputType": {"type": "Select", "options": ["flipY", "flipX", "slideUp", "slideDown", "slideLeft", "slideRight"]},
+      "title": "Animation",
+      "default": "flipY",
+      "validators": ["required"]
     },
     "_inRow": {
       "type":"number",

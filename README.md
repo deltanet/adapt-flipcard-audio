@@ -28,7 +28,7 @@ The attributes listed below are used in *components.json* to configure **Flip ca
 
 **_flipType** (string): This specifies whether all items animate or just the item selected. Acceptable values are `singleFlip` or `allFlip`.  
 
-**_flipTime** (number): This specifies the animation duration of the item.  
+**_animation** (string): This specifies which animation will reveal the card. Acceptable values are `flipY`, `flipX`,  `slideUp`, `slideDown`, `slideLeft` or `slideRight`.  
 
 **_inRow** (number): This specifies the number of items displayed in a row.  
 

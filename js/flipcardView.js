@@ -3,55 +3,23 @@ import ComponentView from 'core/js/views/componentView';
 
 class FlipcardView extends ComponentView {
 
-  events() {
-    return {
-      'click .js-flipcard-toggle': 'onClickFlipItem'
-    };
-  }
+  preRender() {
+    this.onClick = this.onClick.bind(this);
+    this.listenTo(this.model.getChildren(), 'change:_isActive', this.onItemsActiveChange);
 
-  initialize(...args) {
-    super.initialize(...args);
+    this.listenTo(Adapt, {
+      'device:resize': this.updateLayout,
+      'device:changed': this.resetLayout,
+      'audio:changeText': this.replaceText
+    });
 
-    this.setUpModelData();
-    this.setUpEventListeners();
-    this.checkIfResetOnRevisit();
-  }
-
-  setUpModelData() {
     this.itemFlipped = [];
-
-    const itemLength = this.model.get('_items').length;
-
-    for (let i = 0; i < itemLength; i++) {
+    for (let i = 0; i < this.model.get('_items').length; i++) {
       this.itemFlipped[i] = false;
     }
   }
 
-  setUpEventListeners() {
-    this.listenTo(Adapt, {
-      'device:resize': this.updateLayout,
-      'audio:changeText': this.replaceText
-    });
-  }
-
-  checkIfResetOnRevisit() {
-    const isResetOnRevisit = this.model.get('_isResetOnRevisit');
-
-    // If reset is enabled set defaults
-    if (isResetOnRevisit) {
-      this.model.reset(isResetOnRevisit);
-    }
-
-    _.each(this.model.get('_items'), function(item) {
-      item._isVisited = false;
-    });
-  }
-
   postRender() {
-    this.$('.flipcard-audio__item-front').addClass('animated');
-    this.$('.flipcard-audio__item-back').addClass('animated');
-    this.$('.flipcard-audio__item-face').addClass('animated');
-
     this.$('.flipcard-audio__widget').imageready(() => {
       this.setReadyStatus();
       this.updateLayout();
@@ -62,35 +30,69 @@ class FlipcardView extends ComponentView {
     }
   }
 
+  onClick(event) {
+    this.model.toggleItemsState($(event.currentTarget).data('index'));
+  }
+
+  onItemsActiveChange(item, isActive) {
+    this.toggleItem(item, isActive);
+  }
+
+  toggleItem(item, isActive) {
+    const $item = this.getItemElement(item);
+    const $backflipcard = $item.find('.flipcard-audio__item-back');
+    const itemIndex = item.get('_index');
+
+    if (isActive) {
+      this.playAudio(item);
+    } else {
+      this.stopAudio();
+    }
+
+    this.itemFlipped[itemIndex] = isActive;
+
+    Adapt.a11y.toggleAccessibleEnabled($backflipcard, isActive);
+
+    this.resizeHeights();
+  }
+
+  getItemElement(item) {
+    if (!item) return;
+    const index = item.get('_index');
+    return this.$('.js-flipcard-item').filter(`[data-index="${index}"]`);
+  }
+
   updateLayout() {
     this.checkInRow();
     this.resizeHeights();
-    this.handleTabs();
+
+    const $itemBack = this.$('.flipcard-audio__item-back');
+    Adapt.a11y.toggleAccessibleEnabled($itemBack, false);
+  }
+
+  resetLayout() {
+    this.model.resetActiveItems();
   }
 
   checkInRow($selectedElement) {
     if (Adapt.device.screenSize === 'large') {
       const inRow = this.model.get('_inRow');
-      const itemInRow = (98 / inRow) - inRow;
+      const itemWidth = 100 / inRow;
 
-      this.$('.flipcard-audio__listitem').css({
-        width: itemInRow + '%'
+      this.$('.flipcard-audio__item').css({
+        width: (itemWidth - 1) + '%'
       });
 
       this.setItemlayout();
-      this.$('.flipcard-audio__listitem').css({ 'margin-left': '1%' });
-      this.$('.flipcard-audio__listitem').css({ 'margin-right': '1%' });
     } else {
-      this.$('.flipcard-audio__listitem').css({ 'width': '100%' });
-      this.$('.flipcard-audio__listitem').css({ 'margin-left': '0px' });
-      this.$('.flipcard-audio__listitem').css({ 'margin-right': '0px' });
+      this.$('.flipcard-audio__item').css({ 'width': '100%' });
     }
   }
 
   setItemlayout() {
     const columns = this.model.get('_inRow');
     const itemLength = this.model.get('_items').length;
-    const $items = this.$('.flipcard-audio__listitem');
+    const $items = this.$('.flipcard-audio__item');
     const itemRemainder = itemLength % columns;
     let $item;
     let itemToAlignIndex;
@@ -132,16 +134,14 @@ class FlipcardView extends ComponentView {
   }
 
   resizeHeights() {
-    const $items = this.$('.flipcard-audio__listitem');
+    const $items = this.$('.flipcard-audio__item');
     const itemLength = this.model.get('_items').length;
 
     for (let i = 0; i < itemLength; i++) {
-      let height = null;
-
       const $item = $items.eq(i);
-      height = $item.find('.flipcard-audio__item-frontImage').height();
+      let height = $item.find('.flipcard-audio__item-frontImage__image-container').height();
 
-      const $frontflipcard = $item.find('.flipcard-audio__item-frontImage');
+      const $frontflipcard = $item.find('.flipcard-audio__item-frontImage__image-container');
       const $backflipcard = $item.find('.flipcard-audio__item-back');
 
       // reset
@@ -153,113 +153,32 @@ class FlipcardView extends ComponentView {
         if ($backflipcard.outerHeight() > height) {
           height = $backflipcard.outerHeight();
         } else {
-          height = $frontflipcard.height();
+          height = $frontflipcard.outerHeight();
         }
       } else {
-        height = $frontflipcard.height();
+        height = $frontflipcard.outerHeight();
       }
 
-      $item.height(height);
+      $item.height(height + 6);
     }
   }
 
-  handleTabs() {
-    const $itemBack = this.$('.flipcard-audio__item-back');
-    Adapt.a11y.toggleAccessibleEnabled($itemBack, false);
+  playAudio(item) {
+    if (!Adapt.audio || Adapt.course.get('_audio') && !Adapt.course.get('_audio')._isEnabled) return;
+
+    if (this.model.has('_audio') && this.model.get('_audio')._isEnabled && Adapt.audio.audioClip[this.model.get('_audio')._channel].status==1) {
+      // Reset onscreen id
+      Adapt.audio.audioClip[this.model.get('_audio')._channel].onscreenID = "";
+      // Trigger audio
+      Adapt.trigger('audio:playAudio', item.get('_audio').src, this.model.get('_id'), this.model.get('_audio')._channel);
+    }
   }
 
-  onClickFlipItem(event) {
-    ///// Audio /////
-    if (Adapt.audio && this.model.has('_audio') && this.model.get('_audio')._isEnabled && Adapt.audio.audioClip[this.model.get('_audio')._channel].status == 1) {
+  stopAudio() {
+    if (!Adapt.audio || Adapt.course.get('_audio') && !Adapt.course.get('_audio')._isEnabled) return;
+
+    if (this.model.has('_audio') && this.model.get('_audio')._isEnabled) {
       Adapt.trigger('audio:pauseAudio', this.model.get('_audio')._channel);
-    }
-    ///// End of Audio /////
-
-    const $selectedElement = $(event.currentTarget);
-
-    const flipType = this.model.get('_flipType');
-    if (flipType === 'allFlip') {
-      this.performAllFlip($selectedElement);
-    } else if (flipType === 'singleFlip') {
-      this.performSingleFlip($selectedElement);
-    }
-
-    this.resizeHeights();
-  }
-
-  // This function will be responsible to perform All flip on flipcard where all cards can flip and stay in the flipped state.
-  performAllFlip($selectedElement) {
-    const flipcardElementIndex = this.$('.flipcard-audio__item').index($selectedElement);
-
-    // Flip item that is clicked on
-    this.flipItem(flipcardElementIndex, true);
-
-    // Flip all other items
-    const itemLength = this.model.get('_items').length;
-
-    for (let i = 0; i < itemLength; i++) {
-      if (i !== flipcardElementIndex) {
-        this.flipItem(i, false);
-      }
-    }
-  }
-
-  // This function will be responsible to perform Single flip on flipcard where only one card can flip and stay in the flipped state.
-  performSingleFlip($selectedElement) {
-    const flipcardElementIndex = this.$('.flipcard-audio__item').index($selectedElement);
-
-    this.flipItem(flipcardElementIndex, true);
-  }
-
-  flipItem(index, active) {
-    const $item = this.$('.flipcard-audio__item').eq(index);
-    const $backflipcard = $item.find('.flipcard-audio__item-back');
-
-    // If item isn't flipped
-    if (this.itemFlipped[index] === false && active) {
-      $item.addClass('flipcard-audio-flip');
-      this.itemFlipped[index] = true;
-
-      ///// Audio /////
-      const item = this.model.get('_items')[index];
-      if (Adapt.audio && this.model.has('_audio') && this.model.get('_audio')._isEnabled && Adapt.audio.audioClip[this.model.get('_audio')._channel].status == 1) {
-        // Reset onscreen id
-        Adapt.audio.audioClip[this.model.get('_audio')._channel].onscreenID = '';
-        // Trigger audio
-        Adapt.trigger('audio:playAudio', item._audio.src, this.model.get('_id'), this.model.get('_audio')._channel);
-      }
-      ///// End of Audio /////
-
-      this.setVisited(index);
-      $item.addClass('is-visited');
-
-      Adapt.a11y.toggleAccessibleEnabled($backflipcard, true);
-
-    } else {
-      // Flip it back
-      $item.removeClass('flipcard-audio-flip');
-
-      Adapt.a11y.toggleAccessibleEnabled($backflipcard, true);
-
-      this.itemFlipped[index] = false;
-    }
-  }
-
-  setVisited(index) {
-    const item = this.model.get('_items')[index];
-    item._isVisited = true;
-    this.checkCompletionStatus();
-  }
-
-  getVisitedItems() {
-    return _.filter(this.model.get('_items'), function(item) {
-      return item._isVisited;
-    });
-  }
-
-  checkCompletionStatus() {
-    if (this.getVisitedItems().length === this.model.get('_items').length) {
-      this.setCompletionStatus();
     }
   }
 
@@ -281,6 +200,6 @@ class FlipcardView extends ComponentView {
   }
 }
 
-FlipcardView.template = 'flipcard';
+FlipcardView.template = 'flipcard.jsx';
 
 export default FlipcardView;

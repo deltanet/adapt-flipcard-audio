@@ -10,7 +10,7 @@
     "body": "This is optional body text.",
     "instruction": "Click the image below to reveal the text.",
     "_flipType": "singleFlip", //_flipType accepts 'singleFlip' and 'allFlip'
-    "_flipTime": 400,
+    "_animation": "flipY", //_animation accepts 'flipY', 'flipX', 'slideUp', 'slideDown', 'slideLeft' and 'slideRight'
     "_inRow": 4,
     "_items": [
         {
