@@ -78,58 +78,9 @@ class FlipcardView extends ComponentView {
     if (Adapt.device.screenSize === 'large') {
       const inRow = this.model.get('_inRow');
       const itemWidth = 100 / inRow;
-
-      this.$('.flipcard-audio__item').css({
-        width: (itemWidth - 1) + '%'
-      });
-
-      this.setItemlayout();
+      this.$('.flipcard-audio__item').css({ width: (itemWidth - 1) + '%' });
     } else {
       this.$('.flipcard-audio__item').css({ 'width': '100%' });
-    }
-  }
-
-  setItemlayout() {
-    const columns = this.model.get('_inRow');
-    const itemLength = this.model.get('_items').length;
-    const $items = this.$('.flipcard-audio__item');
-    const itemRemainder = itemLength % columns;
-    let $item;
-    let itemToAlignIndex;
-
-    if (itemRemainder !== 0) {
-      if (itemRemainder === 1) {
-        $item = $items.eq(itemLength - 1);
-        this.centerItem($item);
-      } else {
-        itemToAlignIndex = itemLength - itemRemainder;
-        $item = $items.eq(itemToAlignIndex);
-        this.alignItem($item, itemRemainder);
-      }
-    }
-  }
-
-  centerItem(item) {
-    item.css({
-      float: 'none',
-      margin: 'auto'
-    });
-  }
-
-  alignItem(item, itemsToAlign) {
-    const columns = this.model.get('_inRow');
-    const itemWidth = 100 / columns;
-
-    if (Adapt.config.get('_defaultDirection') === 'rtl') {
-      let marginRight = itemWidth / 2;
-      item.css({
-        marginRight: marginRight + '%'
-      });
-    } else {
-      let marginLeft = itemWidth / 2;
-      item.css({
-        marginLeft: marginLeft + '%'
-      });
     }
   }
 
