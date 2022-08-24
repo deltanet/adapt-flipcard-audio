@@ -38,25 +38,25 @@ export default function Flipcard (props) {
             aria-expanded={_isActive.toString()}
           >
 
-            <div className="flipcard-audio-item__face flipcard-audio-item__front">
+            <span className="flipcard-audio-item__face flipcard-audio-item__front">
               <templates.image {...frontImage}
                 classNamePrefixes={['flipcard-audio-item__frontImage']}
               />
-            </div>
+            </span>
 
-            <div className="flipcard-audio-item__face flipcard-audio-item__back" aria-hidden="true">
+            <span className="flipcard-audio-item__face flipcard-audio-item__back" aria-hidden="true">
 
               {backTitle &&
-              <div className="flipcard-audio-item__back-title" dangerouslySetInnerHTML={{ __html: compile(backTitle) }}>
-              </div>
+              <span className="flipcard-audio-item__back-title" dangerouslySetInnerHTML={{ __html: compile(backTitle) }}>
+              </span>
               }
 
               {backBody &&
-              <div className="flipcard-audio-item__back-body" dangerouslySetInnerHTML={{ __html: compile(backBody) }}>
-              </div>
+              <span className="flipcard-audio-item__back-body" dangerouslySetInnerHTML={{ __html: compile(backBody) }}>
+              </span>
               }
 
-            </div>
+            </span>
 
           </button>
 
