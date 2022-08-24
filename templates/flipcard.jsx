@@ -24,7 +24,7 @@ export default function Flipcard (props) {
 
           <button
             className={classes([
-              'flipcard-audio__item',
+              'flipcard-audio-item',
               'js-flipcard-item',
               `is-${_animation}`,
               _isVisited && 'is-visited',
@@ -38,21 +38,21 @@ export default function Flipcard (props) {
             aria-expanded={_isActive.toString()}
           >
 
-            <div className="flipcard-audio__item-face flipcard-audio__item-front">
+            <div className="flipcard-audio-item__face flipcard-audio-item__front">
               <templates.image {...frontImage}
-                classNamePrefixes={['flipcard-audio__item-frontImage']}
+                classNamePrefixes={['flipcard-audio-item__frontImage']}
               />
             </div>
 
-            <div className="flipcard-audio__item-face flipcard-audio__item-back" aria-hidden="true">
+            <div className="flipcard-audio-item__face flipcard-audio-item__back" aria-hidden="true">
 
               {backTitle &&
-              <div className="flipcard-audio__item-back-title" dangerouslySetInnerHTML={{ __html: compile(backTitle) }}>
+              <div className="flipcard-audio-item__back-title" dangerouslySetInnerHTML={{ __html: compile(backTitle) }}>
               </div>
               }
 
               {backBody &&
-              <div className="flipcard-audio__item-back-body" dangerouslySetInnerHTML={{ __html: compile(backBody) }}>
+              <div className="flipcard-audio-item__back-body" dangerouslySetInnerHTML={{ __html: compile(backBody) }}>
               </div>
               }
 

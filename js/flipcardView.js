@@ -40,7 +40,7 @@ class FlipcardView extends ComponentView {
 
   toggleItem(item, isActive) {
     const $item = this.getItemElement(item);
-    const $backflipcard = $item.find('.flipcard-audio__item-back');
+    const $backflipcard = $item.find('.flipcard-audio-item__back');
     const itemIndex = item.get('_index');
 
     if (isActive) {
@@ -66,7 +66,7 @@ class FlipcardView extends ComponentView {
     this.checkInRow();
     this.resizeHeights();
 
-    const $itemBack = this.$('.flipcard-audio__item-back');
+    const $itemBack = this.$('.flipcard-audio-item__back');
     Adapt.a11y.toggleAccessibleEnabled($itemBack, false);
   }
 
@@ -78,22 +78,22 @@ class FlipcardView extends ComponentView {
     if (Adapt.device.screenSize === 'large') {
       const inRow = this.model.get('_inRow');
       const itemWidth = 100 / inRow;
-      this.$('.flipcard-audio__item').css({ width: (itemWidth - 1) + '%' });
+      this.$('.flipcard-audio-item').css({ width: (itemWidth - 1) + '%' });
     } else {
-      this.$('.flipcard-audio__item').css({ 'width': '100%' });
+      this.$('.flipcard-audio-item').css({ 'width': '100%' });
     }
   }
 
   resizeHeights() {
-    const $items = this.$('.flipcard-audio__item');
+    const $items = this.$('.flipcard-audio-item');
     const itemLength = this.model.get('_items').length;
 
     for (let i = 0; i < itemLength; i++) {
       const $item = $items.eq(i);
-      let height = $item.find('.flipcard-audio__item-frontImage__image-container').height();
+      let height = $item.find('.flipcard-audio-item__frontImage__image-container').height();
 
-      const $frontflipcard = $item.find('.flipcard-audio__item-frontImage__image-container');
-      const $backflipcard = $item.find('.flipcard-audio__item-back');
+      const $frontflipcard = $item.find('.flipcard-audio-item__frontImage__image-container');
+      const $backflipcard = $item.find('.flipcard-audio-item__back');
 
       // reset
       $item.css('height', 'auto');
@@ -140,11 +140,11 @@ class FlipcardView extends ComponentView {
       // Change each items title and body
       for (let i = 0; i < this.model.get('_items').length; i++) {
         if (value === 0) {
-          this.$('.flipcard-audio__item-back-title').eq(i).html(this.model.get('_items')[i].backTitle);
-          this.$('.flipcard-audio__item-back-body').eq(i).html(this.model.get('_items')[i].backBody);
+          this.$('.flipcard-audio-item__back-title').eq(i).html(this.model.get('_items')[i].backTitle);
+          this.$('.flipcard-audio-item__back-body').eq(i).html(this.model.get('_items')[i].backBody);
         } else {
-          this.$('.flipcard-audio__item-back-title').eq(i).html(this.model.get('_items')[i].backTitleReduced);
-          this.$('.flipcard-audio__item-back-body').eq(i).html(this.model.get('_items')[i].backBodyReduced);
+          this.$('.flipcard-audio-item__back-title').eq(i).html(this.model.get('_items')[i].backTitleReduced);
+          this.$('.flipcard-audio-item__back-body').eq(i).html(this.model.get('_items')[i].backBodyReduced);
         }
       }
     }

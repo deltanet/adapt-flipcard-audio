@@ -1,8 +1,8 @@
-import Adapt from 'core/js/adapt';
+import components from 'core/js/components';
 import FlipcardModel from './flipcardModel';
 import FlipcardView from './flipcardView';
 
-export default Adapt.register('flipcard-audio', {
+export default components.register('flipcard-audio', {
   model: FlipcardModel,
   view: FlipcardView
 });
