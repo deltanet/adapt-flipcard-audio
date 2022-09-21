@@ -1,4 +1,6 @@
 import Adapt from 'core/js/adapt';
+import a11y from 'core/js/a11y';
+import device from 'core/js/device';
 import ComponentView from 'core/js/views/componentView';
 
 class FlipcardView extends ComponentView {
@@ -51,7 +53,7 @@ class FlipcardView extends ComponentView {
 
     this.itemFlipped[itemIndex] = isActive;
 
-    Adapt.a11y.toggleAccessibleEnabled($backflipcard, isActive);
+    a11y.toggleAccessibleEnabled($backflipcard, isActive);
 
     this.resizeHeights();
   }
@@ -67,7 +69,7 @@ class FlipcardView extends ComponentView {
     this.resizeHeights();
 
     const $itemBack = this.$('.flipcard-audio-item__back');
-    Adapt.a11y.toggleAccessibleEnabled($itemBack, false);
+    a11y.toggleAccessibleEnabled($itemBack, false);
   }
 
   resetLayout() {
@@ -75,7 +77,7 @@ class FlipcardView extends ComponentView {
   }
 
   checkInRow($selectedElement) {
-    if (Adapt.device.screenSize === 'large') {
+    if (device.screenSize === 'large') {
       const inRow = this.model.get('_inRow');
       const itemWidth = 100 / inRow;
       this.$('.flipcard-audio-item').css({ width: (itemWidth - 1) + '%' });
