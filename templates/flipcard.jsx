@@ -10,7 +10,7 @@ export default function Flipcard (props) {
     _animation,
     onClick
   } = props;
-  const itemAriaLevel = _.isNumber(_ariaLevel) ? _ariaLevel + 1 : _ariaLevel;
+  const itemAriaLevel = _.isNumber(_ariaLevel) && _ariaLevel !== 0 : _ariaLevel;
   return (
     <div className="component__inner flipcard-audio__inner">
 
