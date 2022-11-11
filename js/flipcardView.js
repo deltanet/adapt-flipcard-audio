@@ -13,10 +13,7 @@ class FlipcardView extends ComponentView {
       'audio:changeText': this.replaceText
     });
 
-    this.itemFlipped = [];
-    for (let i = 0; i < this.model.get('_items').length; i++) {
-      this.itemFlipped[i] = false;
-    }
+    this.setupItems();
   }
 
   postRender() {
@@ -27,6 +24,31 @@ class FlipcardView extends ComponentView {
 
     if (Adapt.audio && this.model.get('_audio') && this.model.get('_audio')._reducedTextisEnabled) {
       this.replaceText(Adapt.audio.textSize);
+    }
+  }
+
+  setupItems() {
+    const _this = this;
+    this.itemFlipped = [];
+    
+    this.model.getChildren().forEach(item => {
+      const $itemEl = this.getItemElement(item);
+      const index = item.get('_index');
+      
+      _this.itemFlipped[index] = false;
+      $itemEl.on('inview.componentItemView', this.onInviewItem.bind(this));
+    });
+  }
+
+  onInviewItem(event, visible, visiblePartX, visiblePartY) {
+    if (!visible) return;
+
+    const pos = Adapt.device.screenSize === 'small' ? 'top' : 'both';
+
+    if (visiblePartY === pos || visiblePartY === 'both') {
+      $(event.currentTarget).off('inview.componentItemView');
+
+      this.resizeHeights();
     }
   }
 
